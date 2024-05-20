@@ -1,11 +1,6 @@
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f1f1f1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 .sidenav {
     height: 100%;
@@ -19,6 +14,8 @@ body {
     transition: 0.5s;
     padding-top: 60px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 .sidenav a {
     padding: 15px 25px;
@@ -29,6 +26,8 @@ body {
     transition: 0.3s;
     border-radius: 5px;
     margin: 5px 15px;
+    display: flex;
+    align-items: center;
 }
 .sidenav a:hover, .sidenav a.active {
     background-color: red;
@@ -38,7 +37,7 @@ body {
     position: absolute;
     top: 0;
     right: 15px;
-    font-size: 36px;
+    font-size: 20px;
     margin-left: 50px;
 }
 #main {
@@ -58,9 +57,26 @@ body {
     margin-left: 200px;
 }
 .open {
-    width: 200px;
+    width: 250px;
 }
-  
+.submenu {
+    padding-left: 30px;
+}
+.submenu a {
+    font-size: 16px;
+    padding: 10px 25px;
+    background-color: #f1f1f1;
+    color: #333;
+}
+.submenu a:hover {
+    background-color: #ddd;
+}
+.submenu-icon {
+    margin-left: auto;
+}
+
+
+/* Login */ 
 .login-container {
     display: flex;
     justify-content: center;

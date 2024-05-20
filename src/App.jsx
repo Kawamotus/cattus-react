@@ -1,11 +1,12 @@
 //import React from 'react'
-//import Sidebar from './Components/Sidebar/Sidebar'
+import Sidebar from './Sidebar'
+import Login from "./Login"
 
-import Login from "./Components/Login/Login"
 
 const App = () => {
   return <>
-    <Login />s
+    <Login />
+    <Sidebar />
   </>
 }
 
