@@ -1,5 +1,7 @@
 import React from 'react';
-import "../public/style/style.css";
+import { NavLink } from 'react-router-dom';
+
+import "../../public/style/style.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPaw, faPlus, faEye, faTriangleExclamation, faUserGroup, faVideo, faCubes, faChartLine, faMarker, faRightFromBracket, faBars, faTimes, faChevronDown, faGear } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,47 +22,47 @@ const Sidebar = () => {
     <>
       <div className={`sidenav ${isOpen ? 'open' : ''}`}>
         <button className="closebtn" onClick={toggleSidebar}><FontAwesomeIcon icon={faTimes} /></button>
-        <a href="#" className="active">
+        <NavLink to="/">
           <FontAwesomeIcon icon={faHome} /> &nbsp; Início
-        </a>
-        <a href="#animal" onClick={() => toggleSubmenu('animal')}>
+        </NavLink>
+        <a onClick={() => toggleSubmenu('animal')}>
           <FontAwesomeIcon icon={faPaw} />&nbsp; Animal <FontAwesomeIcon icon={faChevronDown} className="submenu-icon" />
         </a>
         {activeMenu === 'animal' && (
           <div className="submenu">
-            <a href="#"><FontAwesomeIcon icon={faPlus} /> &nbsp;&nbsp;Cadastrar</a>
-            <a href="#"><FontAwesomeIcon icon={faEye} /> &nbsp;&nbsp;Listar</a>
-            <a href="#"><FontAwesomeIcon icon={faTriangleExclamation} />&nbsp;&nbsp;Alerta</a>
+            <NavLink to="/registerAnimal"><FontAwesomeIcon icon={faPlus} /> &nbsp;&nbsp;Cadastrar</NavLink>
+            <NavLink to="/listAnimal"><FontAwesomeIcon icon={faEye} /> &nbsp;&nbsp;Listar</NavLink>
+            <NavLink to="/alertAnimal"><FontAwesomeIcon icon={faTriangleExclamation} />&nbsp;&nbsp;Alerta</NavLink>
           </div>
         )}
-        <a href="#">
+        <NavLink to="/employees">
           <FontAwesomeIcon icon={faUserGroup} />&nbsp; Funcionários
-        </a>
-        <a href="#">
+        </NavLink>
+        <NavLink to="/camera">
           <FontAwesomeIcon icon={faVideo} />&nbsp; Câmeras
-        </a>
-        <a href="#">
+        </NavLink>
+        <NavLink to="/supplies">
           <FontAwesomeIcon icon={faCubes} />&nbsp; Mantimentos
-        </a>
-        <a href="#">
+        </NavLink>
+        <NavLink to="/activity">
           <FontAwesomeIcon icon={faChartLine} />&nbsp; Atividades
-        </a>
-        <a href="#marcacoes" onClick={() => toggleSubmenu('marcacoes')}>
+        </NavLink>
+        <a onClick={() => toggleSubmenu('marcacoes')}>
           <FontAwesomeIcon icon={faMarker} />&nbsp; Marcações <FontAwesomeIcon icon={faChevronDown} className="submenu-icon" />
         </a>
         {activeMenu === 'marcacoes' && (
           <div className="submenu">
-            <a href="#"><FontAwesomeIcon icon={faPaw} /> &nbsp;&nbsp;Animais</a>
-            <a href="#"><FontAwesomeIcon icon={faChartLine} /> &nbsp;&nbsp;Atividades</a>
-            <a href="#"><FontAwesomeIcon icon={faCubes} />&nbsp;&nbsp;Mantimentos</a>
+            <NavLink to="/markAnimal"><FontAwesomeIcon icon={faPaw} /> &nbsp;&nbsp;Animais</NavLink>
+            <NavLink to="/markActivity"><FontAwesomeIcon icon={faChartLine} /> &nbsp;&nbsp;Atividades</NavLink>
+            <NavLink to="/markSupplies"><FontAwesomeIcon icon={faCubes} />&nbsp;&nbsp;Mantimentos</NavLink>
           </div>
         )}
-        <a href="#">
+        <NavLink to="/config">
           <FontAwesomeIcon icon={faGear} />&nbsp; Configurações
-        </a>
-        <a href="#">
+        </NavLink>
+        <NavLink to="/loggout">
         <FontAwesomeIcon icon={faRightFromBracket} />&nbsp; Sair
-        </a>
+        </NavLink>
       </div>
 
       <div id="main" className={isOpen ? 'shifted' : ''}>

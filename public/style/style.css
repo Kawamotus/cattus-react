@@ -75,6 +75,9 @@ body {
     margin-left: auto;
 }
 
+a {
+    cursor: pointer;
+}
 
 /* Login */ 
 .login-container {
