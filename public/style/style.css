@@ -79,6 +79,18 @@ a {
     cursor: pointer;
 }
 
+.user-img {
+
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    
+}
+
+.user-img img{
+    width: 100px;
+}
+
 /* Login */ 
 .login-container {
     display: flex;
@@ -97,12 +109,12 @@ a {
 }
 
 .logo {
-    width: 100px;
-    margin-bottom: 20px;
+    width: 500px;
+    margin: 40px;
 }
 
 h2 {
-    color: #670000;
+    color: #ff0000;
     margin-bottom: 20px;
 }
 
@@ -127,7 +139,7 @@ input {
 }
 
 .login-button {
-    background-color: #670000;
+    background-color: #ff0000;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -138,4 +150,17 @@ input {
 
 .login-button:hover {
     background-color: #a00000;
+}
+
+.forget-password a{
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    transition: 0.3s;
+}
+
+.forget-password a:hover{
+    text-decoration: none;
+    font-size: 18px;
+    color: #d3d3d3;
 }

@@ -7,6 +7,9 @@ import { faHome, faPaw, faPlus, faEye, faTriangleExclamation, faUserGroup, faVid
 
 //const { pathname } = window.location;
 const Sidebar = () => {
+  const userImg = "../public/imgs/logo-teste.png";
+
+
   const [isOpen, setIsOpen] = React.useState(false);
   const [activeMenu, setActiveMenu] = React.useState(null);
 
@@ -18,58 +21,65 @@ const Sidebar = () => {
     setActiveMenu(activeMenu === menu ? null : menu);
   };
 
-  return (
-    <>
-      <div className={`sidenav ${isOpen ? 'open' : ''}`}>
-        <button className="closebtn" onClick={toggleSidebar}><FontAwesomeIcon icon={faTimes} /></button>
-        <NavLink to="/">
-          <FontAwesomeIcon icon={faHome} /> &nbsp; Início
-        </NavLink>
-        <a onClick={() => toggleSubmenu('animal')}>
-          <FontAwesomeIcon icon={faPaw} />&nbsp; Animal <FontAwesomeIcon icon={faChevronDown} className="submenu-icon" />
-        </a>
-        {activeMenu === 'animal' && (
-          <div className="submenu">
-            <NavLink to="/registerAnimal"><FontAwesomeIcon icon={faPlus} /> &nbsp;&nbsp;Cadastrar</NavLink>
-            <NavLink to="/listAnimal"><FontAwesomeIcon icon={faEye} /> &nbsp;&nbsp;Listar</NavLink>
-            <NavLink to="/alertAnimal"><FontAwesomeIcon icon={faTriangleExclamation} />&nbsp;&nbsp;Alerta</NavLink>
-          </div>
-        )}
-        <NavLink to="/employees">
-          <FontAwesomeIcon icon={faUserGroup} />&nbsp; Funcionários
-        </NavLink>
-        <NavLink to="/camera">
-          <FontAwesomeIcon icon={faVideo} />&nbsp; Câmeras
-        </NavLink>
-        <NavLink to="/supplies">
-          <FontAwesomeIcon icon={faCubes} />&nbsp; Mantimentos
-        </NavLink>
-        <NavLink to="/activity">
-          <FontAwesomeIcon icon={faChartLine} />&nbsp; Atividades
-        </NavLink>
-        <a onClick={() => toggleSubmenu('marcacoes')}>
-          <FontAwesomeIcon icon={faMarker} />&nbsp; Marcações <FontAwesomeIcon icon={faChevronDown} className="submenu-icon" />
-        </a>
-        {activeMenu === 'marcacoes' && (
-          <div className="submenu">
-            <NavLink to="/markAnimal"><FontAwesomeIcon icon={faPaw} /> &nbsp;&nbsp;Animais</NavLink>
-            <NavLink to="/markActivity"><FontAwesomeIcon icon={faChartLine} /> &nbsp;&nbsp;Atividades</NavLink>
-            <NavLink to="/markSupplies"><FontAwesomeIcon icon={faCubes} />&nbsp;&nbsp;Mantimentos</NavLink>
-          </div>
-        )}
-        <NavLink to="/config">
-          <FontAwesomeIcon icon={faGear} />&nbsp; Configurações
-        </NavLink>
-        <NavLink to="/loggout">
-        <FontAwesomeIcon icon={faRightFromBracket} />&nbsp; Sair
-        </NavLink>
-      </div>
 
-      <div id="main" className={isOpen ? 'shifted' : ''}>
-        <button className="openbtn" onClick={toggleSidebar}><FontAwesomeIcon icon={faBars} /></button>
-      </div>
-    </>
-  );
-};
+    return (
+      <>
+        <div className={`sidenav ${isOpen ? 'open' : ''}`}>
+          <button className="closebtn" onClick={toggleSidebar}><FontAwesomeIcon icon={faTimes} /></button>
+          <div className='user-img'>
+            <img className="user-img" src={userImg} alt="Username" />
+          </div>
+          <p>coisa</p>
+          <NavLink to="/">
+            <FontAwesomeIcon icon={faHome} /> &nbsp; Início
+          </NavLink>
+          <a onClick={() => toggleSubmenu('animal')}>
+            <FontAwesomeIcon icon={faPaw} />&nbsp; Animal <FontAwesomeIcon icon={faChevronDown} className="submenu-icon" />
+          </a>
+          {activeMenu === 'animal' && (
+            <div className="submenu">
+              <NavLink to="/registerAnimal"><FontAwesomeIcon icon={faPlus} /> &nbsp;&nbsp;Cadastrar</NavLink>
+              <NavLink to="/listAnimal"><FontAwesomeIcon icon={faEye} /> &nbsp;&nbsp;Listar</NavLink>
+              <NavLink to="/alertAnimal"><FontAwesomeIcon icon={faTriangleExclamation} />&nbsp;&nbsp;Alerta</NavLink>
+            </div>
+          )}
+          <NavLink to="/employees">
+            <FontAwesomeIcon icon={faUserGroup} />&nbsp; Funcionários
+          </NavLink>
+          <NavLink to="/camera">
+            <FontAwesomeIcon icon={faVideo} />&nbsp; Câmeras
+          </NavLink>
+          <NavLink to="/supplies">
+            <FontAwesomeIcon icon={faCubes} />&nbsp; Mantimentos
+          </NavLink>
+          <NavLink to="/activity">
+            <FontAwesomeIcon icon={faChartLine} />&nbsp; Atividades
+          </NavLink>
+          <a onClick={() => toggleSubmenu('marcacoes')}>
+            <FontAwesomeIcon icon={faMarker} />&nbsp; Marcações <FontAwesomeIcon icon={faChevronDown} className="submenu-icon" />
+          </a>
+          {activeMenu === 'marcacoes' && (
+            <div className="submenu">
+              <NavLink to="/markAnimal"><FontAwesomeIcon icon={faPaw} /> &nbsp;&nbsp;Animais</NavLink>
+              <NavLink to="/markActivity"><FontAwesomeIcon icon={faChartLine} /> &nbsp;&nbsp;Atividades</NavLink>
+              <NavLink to="/markSupplies"><FontAwesomeIcon icon={faCubes} />&nbsp;&nbsp;Mantimentos</NavLink>
+            </div>
+          )}
+          <NavLink to="/config">
+            <FontAwesomeIcon icon={faGear} />&nbsp; Configurações
+          </NavLink>
+          <NavLink to="/loggout">
+          <FontAwesomeIcon icon={faRightFromBracket} />&nbsp; Sair
+          </NavLink>
+        </div>
+  
+        <div id="main" className={isOpen ? 'shifted' : ''}>
+          <button className="openbtn" onClick={toggleSidebar}><FontAwesomeIcon icon={faBars} /></button>
+        </div>
+      </>
+    );
+  }
+  
+
 
 export default Sidebar;
