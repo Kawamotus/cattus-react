@@ -38,8 +38,8 @@ const Sidebar = () => {
           </a>
           {activeMenu === 'animal' && (
             <div className="submenu">
-              <NavLink to="/registerAnimal"><FontAwesomeIcon icon={faPlus} /> &nbsp;&nbsp;Cadastrar</NavLink>
-              <NavLink to="/listAnimal"><FontAwesomeIcon icon={faEye} /> &nbsp;&nbsp;Listar</NavLink>
+              <NavLink to="/animalRegister"><FontAwesomeIcon icon={faPlus} /> &nbsp;&nbsp;Cadastrar</NavLink>
+              <NavLink to="/animalList"><FontAwesomeIcon icon={faEye} /> &nbsp;&nbsp;Listar</NavLink>
               <NavLink to="/alertAnimal"><FontAwesomeIcon icon={faTriangleExclamation} />&nbsp;&nbsp;Alerta</NavLink>
             </div>
           )}

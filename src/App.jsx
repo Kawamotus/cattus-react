@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Sidebar from './Components/Sidebar';
 import Login from "./Login";
+import AnimalList from './Pages/AnimalList';
 
 
 const App = () => {
@@ -10,8 +11,8 @@ const App = () => {
       <Routes>
         <Route path='/' />
         <Route path='login' element={<Login />}/>
-
-        <Route path='/registerAnimal' />
+        <Route path='animalList' element={<AnimalList />} />
+        <Route path='animalRegister' />
       </Routes>
     </BrowserRouter>
   )
