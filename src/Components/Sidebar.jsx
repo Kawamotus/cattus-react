@@ -1,17 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import "../../public/style/style.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPaw, faPlus, faEye, faTriangleExclamation, faUserGroup, faVideo, faCubes, faChartLine, faMarker, faRightFromBracket, faBars, faTimes, faChevronDown, faGear } from '@fortawesome/free-solid-svg-icons';
 
+import LogoutModal from './LogoutModal';
+
 //const { pathname } = window.location;
 const Sidebar = () => {
   const userImg = "../public/imgs/logo-teste.png";
-
+  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = React.useState(false);
   const [activeMenu, setActiveMenu] = React.useState(null);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
+
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -21,15 +26,35 @@ const Sidebar = () => {
     setActiveMenu(activeMenu === menu ? null : menu);
   };
 
+  const openLogoutModal = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const closeLogoutModal = () => {
+    setIsLogoutModalOpen(false);
+  };
+
+  const handleLogoutConfirm = () => {
+    Cookies.remove("token");
+    setIsLogoutModalOpen(false);
+    navigate("/login");
+    setIsOpen(false);
+  };
+
+
+
+  if(Cookies.get("token")){
+
 
     return (
       <>
         <div className={`sidenav ${isOpen ? 'open' : ''}`}>
           <button className="closebtn" onClick={toggleSidebar}><FontAwesomeIcon icon={faTimes} /></button>
           <div className='user-img'>
-            <img className="user-img" src={userImg} alt="Username" />
+            <img src={userImg} alt="Username" />
+            <p>Nome do cabaço {/* Cookies.get("username") ?*/}</p>
           </div>
-          <p>coisa</p>
+          
           <NavLink to="/">
             <FontAwesomeIcon icon={faHome} /> &nbsp; Início
           </NavLink>
@@ -68,16 +93,25 @@ const Sidebar = () => {
           <NavLink to="/config">
             <FontAwesomeIcon icon={faGear} />&nbsp; Configurações
           </NavLink>
-          <NavLink to="/loggout">
-          <FontAwesomeIcon icon={faRightFromBracket} />&nbsp; Sair
-          </NavLink>
+          <a onClick={openLogoutModal}>
+            <FontAwesomeIcon icon={faRightFromBracket} />&nbsp; Sair
+          </a>
         </div>
-  
         <div id="main" className={isOpen ? 'shifted' : ''}>
           <button className="openbtn" onClick={toggleSidebar}><FontAwesomeIcon icon={faBars} /></button>
         </div>
+
+        <LogoutModal 
+          isOpen={isLogoutModalOpen} 
+          onRequestClose={closeLogoutModal} 
+          onConfirm={handleLogoutConfirm} 
+      />
       </>
     );
+  }
+  else{
+    return "";
+  }
   }
   
 

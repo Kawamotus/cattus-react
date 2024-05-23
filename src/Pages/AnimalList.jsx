@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import Cookies from 'js-cookie';
+
 
 function CardUser({name, email, username, phone}){
     return <div style={{ width: "300px", padding: "5px", border: "2px solid #c6c6c6", borderRadius: "6px", marginBottom: "10px"}}>
@@ -57,6 +59,7 @@ const AnimalList = () => {
 
     return <>
         <div className='teste-centro'>
+            <p>{Cookies.get("token")}</p>
             <button onClick={loadUsers}>Reload</button>
             {isLoading && <p>carregando...</p>}
             {users.map((user) => 

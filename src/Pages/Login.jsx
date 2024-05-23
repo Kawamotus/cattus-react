@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 //meter uma estrutura condicional com se estiver logado, direciona pra home, se nao, abre login
 const Login = () => {
@@ -7,41 +8,40 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState();
     const [password, setPassword] = React.useState();
-    const [erro, setErro] = React.useState();
-    const [token, setToken] = React.useState();
+    const [erro, setErro] = React.useState()
+
+    document.title = "Login";
+
+    React.useEffect(() => {
+        if(Cookies.get("token")){
+            navigate("/");
+        }
+    })
 
     const logar = async (e) => {
         e.preventDefault();
         if(!email || !password){
             setErro("Insira todos os dados!");
         }
-        let response = await fetch("http://localhost:8080/login", {
+        let response = await fetch("http://localhost:8080/employee/login", {
             method: "POST",
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 employeeEmail: email,
                 employeePassword: password
             })
-        })
-         response = response.json()
-         console.log(response);
+        });
 
-         //ou é response.ok ou response.data.ok
-        if(response.data.ok){ 
-            setToken(response.token);
-            document.cookie = `token=${token}`;
-            //mexer com cookie aaaaaaaaaaa
-            //document.cookie = response.token
+        response = await response.json()
+
+        if(response.ok){ 
+            Cookies.set("token", response.token);          
             navigate("/");
         }
 
-        
     }
 
-    React.useEffect(() => {
-        if(token){
-            navigate("/");
-        }
-    })
+    
 
 
     //adicionar um autenticador de login que puxe informações (cookie?)
