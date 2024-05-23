@@ -12,6 +12,18 @@ const AnimalList = () => {
     
     const [users, setUsers] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
+   // const [email, setEmail] = React.useState()
+
+    // async function call_api(){
+    //     const responde = await fetch("", {
+    //         method: "POST",
+    //         body: JSON.stringify(
+    //             {
+    //                 email:email
+    //             }
+    //         )
+    //     }) 
+    // }
 
     async function loadUsers(){
         //faz a requisição no servidor
@@ -19,14 +31,20 @@ const AnimalList = () => {
         const resposta = await fetch('https://jsonplaceholder.typicode.com/users', {
             //aqq passo o method(post, get, put, patch, delete)
             //o padrao é o get, que serve apenas para puxar dados
-            //method: "get",
-            //aqq passo o que será passado do body para a api
-            // body: {
-            //     nome: "nome",
-            //     email: "email"
-            // }
+            // method: "POST",
+            // //aqq passo o que será passado do body para a api
+            //  body: {
+            //      nome: "nome",
+            //      email: "email"
+            //  },
+            //  headers:{
+            //     k:
+            //     token: localStorage.getItem('token')
+            //  }
         });
-        //transforma a resposta em json
+        // localStorage.setItem('token', "teste")
+        // console.log(localStorage.getItem('token'))
+        // //transforma a resposta em json
         const data = await resposta.json();
         setIsLoading(false);
         setUsers(data);
@@ -37,7 +55,7 @@ const AnimalList = () => {
         loadUsers()
     }, [])
 
-    return (
+    return <>
         <div className='teste-centro'>
             <button onClick={loadUsers}>Reload</button>
             {isLoading && <p>carregando...</p>}
@@ -45,7 +63,13 @@ const AnimalList = () => {
                 <CardUser name={user.name} email={user.email} username={user.username} phone={user.id} key={user.id} />
             )}
         </div>
-    )
+        {/* <div>
+            <input type="text" name="" id="" onClick={(e)=>setEmail(e.target)}/>
+
+            <button onClick={call_api()}></button>
+        </div> */}
+        </>
+    
 }
 
 export default AnimalList
