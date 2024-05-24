@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import "../../public/style/style.css";
@@ -8,8 +8,8 @@ import { faHome, faPaw, faPlus, faEye, faTriangleExclamation, faUserGroup, faVid
 
 import LogoutModal from './LogoutModal';
 
-//const { pathname } = window.location;
 const Sidebar = () => {
+
   const userImg = "../public/imgs/logo-teste.png";
   const navigate = useNavigate();
 
@@ -44,8 +44,6 @@ const Sidebar = () => {
 
 
   if(Cookies.get("token")){
-
-
     return (
       <>
         <div className={`sidenav ${isOpen ? 'open' : ''}`}>
@@ -110,7 +108,7 @@ const Sidebar = () => {
     );
   }
   else{
-    return "";
+    return <Navigate to="/login" />
   }
   }
   

@@ -33,6 +33,7 @@ const Login = () => {
         });
 
         response = await response.json()
+        console.log(response);
 
         if(response.ok){ 
             Cookies.set("token", response.token);          
