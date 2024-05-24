@@ -6,8 +6,8 @@ import Cookies from 'js-cookie';
 const Login = () => {
 
     const navigate = useNavigate();
-    const [email, setEmail] = React.useState();
-    const [password, setPassword] = React.useState();
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
     const [erro, setErro] = React.useState()
 
     document.title = "Login";

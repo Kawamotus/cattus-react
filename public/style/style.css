@@ -229,8 +229,81 @@ input {
     background-color: #999;
   }
   
-
-
+/* Navbar*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #670000;
+    padding: 10px 20px;
+    color: white;
+    position: relative;
+  }
+  
+  .navbar-left, .navbar-center, .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .notification-icon {
+    position: relative;
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  .notifications-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    z-index: 1000;
+  }
+  
+  .notification {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .notification:last-child {
+    border-bottom: none;
+  }
+  
+  .notification:hover {
+    background-color: #f1f1f1;
+  }
+  
+/* app */
+.App {
+    font-family: Arial, sans-serif;
+  }
+  
+  .content {
+    margin-left: 0;
+    transition: margin-left 0.5s;
+  }
+  
+  .shifted {
+    margin-left: 250px;
+  }
+  
+  
 /* testes */
 .teste-centro{
     display: flex;
@@ -241,3 +314,10 @@ input {
 .teste-centro button{
     width: 200px;
 }
+
+/* form */
+.img-thumbnail {
+    max-width: 100%;
+    height: auto;
+  }
+  
