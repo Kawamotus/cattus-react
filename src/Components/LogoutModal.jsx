@@ -8,7 +8,7 @@ const LogoutModal = ({ isOpen, onRequestClose, onConfirm }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className="modal"
+      className="modal-aaa"
       overlayClassName="overlay"
     >
       <h2>Confirmação de Logout</h2>
