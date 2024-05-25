@@ -4,8 +4,9 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const PetRegistration = () => {
 
+    document.title = "Cadastro de Pets";
 
-    const [name, setName] = React.useState("");
+    const [petName, setPetName] = React.useState("");
     const [birthDate, setBirthDate] = React.useState("");
     const [entry, setEntry] = React.useState("");
     const [gender, setGender] = React.useState("");
@@ -42,13 +43,56 @@ const PetRegistration = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!name || !birthDate || !entry || !gender || !animalType || !breed || !size || !comorbidities || !observations){
+        if(!petName || !birthDate || !entry || !gender || !animalType || !breed || !size || !comorbidities || !observations){
             toast.error("Preencha todos os campos!")
+        }  
+
+        let response = await fetch("http://localhost:8080/animal/create", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'authorization': Cookies.get("token")
+            },
+            body: JSON.stringify({
+                petName: petName,
+                petBirth: birthDate,
+                petEntry: entry,
+                petGender: gender,
+                petType: animalType,
+                petBreed: breed,
+                petSize: size,
+                petComorbidities: comorbidities,
+                petObs: observations,
+                petVaccCard: formData.vaccinationCard,
+                petPicture: formData.petPhoto
+            })
+        });
+
+        response = response.json();
+
+        if(response.ok){
+            toast.success("Pet cadastrado com sucesso!");
         }
 
 
-        
     };
+
+    const clearFields = () => {
+        setPetName("");
+        setBirthDate("");
+        setEntry("");
+        setGender("");
+        setAnimalType("");
+        setBreed("");
+        setSize("");
+        setComorbidities("");
+        setObservations("");
+        setPreviewPetPhoto(null);
+        setPreviewVaccinationCard(null);
+        //descobrir como remover a foto do role
+    }
+
+    
 
     return (
         <div className="container mt-5">
@@ -62,10 +106,10 @@ const PetRegistration = () => {
                     type="text"
                     placeholder="Nome do animal"
                     name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={petName}
+                    onChange={(e) => setPetName(e.target.value)}
                 />
-                <p>{name}</p>
+                <p>{petName}</p>
                 </Form.Group>
             </Col>
             <Col>
@@ -227,6 +271,7 @@ const PetRegistration = () => {
             <Button variant="primary" type="submit" style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}>
             Cadastrar
             </Button>
+            <Button onClick={clearFields} style={{marginLeft: "25px"}}>Limpar</Button>
             <Toaster />
         </Form>
         </div>
