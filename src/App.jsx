@@ -6,6 +6,7 @@ import Sidebar from './Components/Sidebar';
 import Login from "./Pages/Login";
 import AnimalList from './Pages/AnimalList';
 import PetRegistration from './Pages/PetRegistration';
+import Home from './Pages/Home';
 
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
       <div className="App">
         <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
         <Routes>
-          <Route path='/' />
+          <Route path='/' element={<Home />}/>
           <Route path='login' element={<Login />}/>
           <Route path='animalList' element={<AnimalList />} />
           <Route path='animalRegister' element={<PetRegistration />} />

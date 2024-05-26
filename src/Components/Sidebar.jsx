@@ -43,6 +43,9 @@ const Sidebar = () => {
 
 
 
+  ////Arrumar icones (cor e tudo mais)
+
+
   if(Cookies.get("token")){
     return (
       <>

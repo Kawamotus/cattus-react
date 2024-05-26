@@ -93,7 +93,7 @@ const PetRegistration = () => {
     }
 
     
-
+    //////adicionar icones nos itens
     return (
         <div className="container mt-5">
         <h1 className="text-center mb-4" style={{ color: '#ff0000' }}>Cadastro de Animais</h1>
