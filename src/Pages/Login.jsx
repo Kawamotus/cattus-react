@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 
-//meter uma estrutura condicional com se estiver logado, direciona pra home, se nao, abre login
+
 const Login = () => {
 
     const navigate = useNavigate();
@@ -32,12 +32,32 @@ const Login = () => {
             })
         });
 
-        response = await response.json()
-        console.log(response);
+        response = await response.json();
 
         if(response.ok){ 
-            Cookies.set("token", response.token);          
+
+            Cookies.set("token", response.token);
+
+            let userData = await fetch('http://localhost:8080/', {
+                method: "GET",
+                headers: {
+                    'authorization': Cookies.get("token")
+                }
+            });
+
+            userData = await userData.json();
+            Cookies.set("id", userData.id);
+            Cookies.set("name", userData.name);
+            Cookies.set("company", userData.company)
+
+            console.log(userData)
+            console.log(Cookies.get("id"))
+            console.log(Cookies.get("name"))
+            console.log(Cookies.get("company"))
+            //aparentemnente ta funcionando
+
             navigate("/");
+            
         }
 
     }

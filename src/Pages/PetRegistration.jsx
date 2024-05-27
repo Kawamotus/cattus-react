@@ -17,7 +17,7 @@ const PetRegistration = () => {
     const [observations, setObservations] = React.useState("");
 
 
-    const [formData, setFormData] = React.useState({
+    const [imgData, setImgData] = React.useState({
         vaccinationCard: null,
         petPhoto: null,
     });
@@ -28,8 +28,8 @@ const PetRegistration = () => {
 
     const handleFileChange = (e) => {
         const { name, files } = e.target;
-        setFormData({
-        ...formData,
+        setImgData({
+        ...imgData,
         [name]: files[0],
     });
 
@@ -47,25 +47,26 @@ const PetRegistration = () => {
             toast.error("Preencha todos os campos!")
         }  
 
+        const formData = new FormData();
+        formData.append("petName", petName);
+        formData.append("petBirth", birthDate);
+        formData.append("petEntry", entry);
+        formData.append("petGender", gender);
+        formData.append("petType", animalType);
+        formData.append("petBreed", breed);
+        formData.append("petSize", size);
+        formData.append("petComorbidities", comorbidities);
+        formData.append("petObs", observations);
+        formData.append("petVaccCard", imgData.vaccinationCard);
+        formData.append("petPicture", imgData.petPhoto);
+
         let response = await fetch("http://localhost:8080/animal/create", {
             method: "POST",
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'authorization': Cookies.get("token")
             },
-            body: JSON.stringify({
-                petName: petName,
-                petBirth: birthDate,
-                petEntry: entry,
-                petGender: gender,
-                petType: animalType,
-                petBreed: breed,
-                petSize: size,
-                petComorbidities: comorbidities,
-                petObs: observations,
-                petVaccCard: formData.vaccinationCard,
-                petPicture: formData.petPhoto
-            })
+            body: formData
         });
 
         response = response.json();
