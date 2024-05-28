@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 const PetRegistration = () => {
 
@@ -49,27 +50,30 @@ const PetRegistration = () => {
 
         const formData = new FormData();
         formData.append("petName", petName);
+        formData.append("company", Cookies.get("company"));
         formData.append("petBirth", birthDate);
         formData.append("petEntry", entry);
         formData.append("petGender", gender);
-        formData.append("petType", animalType);
-        formData.append("petBreed", breed);
-        formData.append("petSize", size);
+        formData.append("petCharacteristics.petType", animalType);
+        formData.append("petCharacteristics.petBreed", breed);
+        formData.append("petCharacteristics.petSize", size);
         formData.append("petComorbidities", comorbidities);
         formData.append("petObs", observations);
         formData.append("petVaccCard", imgData.vaccinationCard);
         formData.append("petPicture", imgData.petPhoto);
+        formData.append("petStatus.petCurrentStatus", "");
+        formData.append("petStatus.petOccurrencesQuantity", "");
+        formData.append("petStatus.petLastOccurrence", "");
 
         let response = await fetch("http://localhost:8080/animal/create", {
             method: "POST",
             headers: {
-                'Content-Type': 'multipart/form-data',
                 'authorization': Cookies.get("token")
             },
             body: formData
         });
 
-        response = response.json();
+        response = await response.json();
 
         if(response.ok){
             toast.success("Pet cadastrado com sucesso!");
@@ -110,7 +114,6 @@ const PetRegistration = () => {
                     value={petName}
                     onChange={(e) => setPetName(e.target.value)}
                 />
-                <p>{petName}</p>
                 </Form.Group>
             </Col>
             <Col>

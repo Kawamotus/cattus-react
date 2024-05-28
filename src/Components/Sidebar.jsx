@@ -36,6 +36,10 @@ const Sidebar = () => {
 
   const handleLogoutConfirm = () => {
     Cookies.remove("token");
+    Cookies.remove("id");
+    Cookies.remove("company");
+    Cookies.remove("name");
+    Cookies.remove("picture");
     setIsLogoutModalOpen(false);
     navigate("/login");
     setIsOpen(false);
@@ -52,8 +56,8 @@ const Sidebar = () => {
         <div className={`sidenav ${isOpen ? 'open' : ''}`}>
           <button className="closebtn" onClick={toggleSidebar}><FontAwesomeIcon icon={faTimes} /></button>
           <div className='user-img'>
-            <img src={userImg} alt="Username" />
-            <p>Nome do cabaço {/* Cookies.get("username") ?*/}</p>
+            <img src={Cookies.get("picture")} alt="Username" /><br />
+            <p>{Cookies.get("name")}</p>
           </div>
           
           <NavLink to="/">
