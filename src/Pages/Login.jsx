@@ -48,12 +48,15 @@ const Login = () => {
             userData = await userData.json();
             Cookies.set("id", userData.id);
             Cookies.set("name", userData.name);
-            Cookies.set("company", userData.company)
+            Cookies.set("company", userData.company);
+            Cookies.set("picture", userData.userPicture);
 
             console.log(userData)
-            console.log(Cookies.get("id"))
-            console.log(Cookies.get("name"))
-            console.log(Cookies.get("company"))
+            console.log(Cookies.get("id"));
+            console.log(Cookies.get("name"));
+            console.log(Cookies.get("company"));
+            console.log(Cookies.get("picture"));
+            
             //aparentemnente ta funcionando
 
             navigate("/");
