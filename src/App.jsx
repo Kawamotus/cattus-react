@@ -4,9 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Sidebar from './Components/Sidebar';
 import Login from "./Pages/Login";
-import AnimalList from './Pages/AnimalList';
 import PetRegistration from './Pages/PetRegistration';
 import Home from './Pages/Home';
+import EmployeeRegister from './Pages/EmployeeRegister';
+import PetList from './Pages/PetList';
 
 
 const App = () => {
@@ -19,15 +20,14 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="App">
         <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
         <Routes>
           <Route path='/' element={<Home />}/>
           <Route path='login' element={<Login />}/>
-          <Route path='animalList' element={<AnimalList />} />
-          <Route path='animalRegister' element={<PetRegistration />} />
+          <Route path='petList' element={<PetList />} />
+          <Route path='petRegister' element={<PetRegistration />} />
+          <Route path="employees" element={<EmployeeRegister />} />
         </Routes>
-      </div>
     </BrowserRouter>
   )
 }

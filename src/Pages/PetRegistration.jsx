@@ -33,24 +33,22 @@ const PetRegistration = () => {
         ...imgData,
         [name]: files[0],
     });
-
-    if (name === 'vaccinationCard') {
-      setPreviewVaccinationCard(URL.createObjectURL(files[0]));
-    } 
-    else if (name === 'petPhoto') {
-      setPreviewPetPhoto(URL.createObjectURL(files[0]));
-    }
+        if (name === 'vaccinationCard') {
+        setPreviewVaccinationCard(URL.createObjectURL(files[0]));
+        } 
+        else if (name === 'petPhoto') {
+        setPreviewPetPhoto(URL.createObjectURL(files[0]));
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(!petName || !birthDate || !entry || !gender || !animalType || !breed || !size || !comorbidities || !observations){
-            toast.error("Preencha todos os campos!")
+            toast.error("Preencha todos os campos!");
         }  
 
         const formData = new FormData();
         formData.append("petName", petName);
-        formData.append("company", Cookies.get("company"));
         formData.append("petBirth", birthDate);
         formData.append("petEntry", entry);
         formData.append("petGender", gender);
@@ -61,6 +59,7 @@ const PetRegistration = () => {
         formData.append("petObs", observations);
         formData.append("petVaccCard", imgData.vaccinationCard);
         formData.append("petPicture", imgData.petPhoto);
+        formData.append("company", Cookies.get("company"));
         formData.append("petStatus.petCurrentStatus", "");
         formData.append("petStatus.petOccurrencesQuantity", "");
         formData.append("petStatus.petLastOccurrence", "");
@@ -77,6 +76,7 @@ const PetRegistration = () => {
 
         if(response.ok){
             toast.success("Pet cadastrado com sucesso!");
+            clearFields();
         }
 
 
@@ -94,7 +94,6 @@ const PetRegistration = () => {
         setObservations("");
         setPreviewPetPhoto(null);
         setPreviewVaccinationCard(null);
-        //descobrir como remover a foto do role
     }
 
     
@@ -193,12 +192,16 @@ const PetRegistration = () => {
                 <Form.Group controlId="formSize">
                 <Form.Label>Porte</Form.Label>
                 <Form.Control
-                    type="text"
-                    placeholder="Porte do animal"
-                    name="size"
+                    as="select"
+                    name="animalSize"
                     value={size}
                     onChange={(e) => setSize(e.target.value)}
-                />
+                >
+                    <option>Selecione...</option>
+                    <option value="Pequeno">Pequeno</option>
+                    <option value="Médio">Médio</option>
+                    <option value="Grande">Grande</option>
+                </Form.Control>
                 </Form.Group>
             </Col>
             <Col>
@@ -275,7 +278,7 @@ const PetRegistration = () => {
             <Button variant="primary" type="submit" style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}>
             Cadastrar
             </Button>
-            <Button onClick={clearFields} style={{marginLeft: "25px"}}>Limpar</Button>
+            {/* <Button onClick={clearFields} style={{marginLeft: "25px"}}>Limpar</Button> */}
             <Toaster />
         </Form>
         </div>
