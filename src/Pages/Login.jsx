@@ -49,7 +49,7 @@ const Login = () => {
             Cookies.set("id", userData.id);
             Cookies.set("name", userData.name);
             Cookies.set("company", userData.company);
-            Cookies.set("picture", userData.userPicture);
+            Cookies.set("picture", userData.picture);
 
             console.log(userData)
             console.log(Cookies.get("id"));

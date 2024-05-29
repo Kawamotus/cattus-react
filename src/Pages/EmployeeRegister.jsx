@@ -10,11 +10,48 @@ const EmployeeRegister = () => {
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const [picture, setPicture] = React.useState("");
+    const [picture, setPicture] = React.useState(null);
     const [accessLevel, setAccessLevel] = React.useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(!name || !email || !password || !picture || !accessLevel){
+            toast.error("Preencha todos os campos!");
+        }
+
+        const formData = new FormData();
+
+        formData.append("employeeName", name);
+        formData.append("employeeEmail", email);
+        formData.append("employeePassword", password);
+        formData.append("employeePicture", picture);
+        formData.append("employeeAccessLevel", accessLevel);
+        formData.append("company", Cookies.get("company"));
+
+        let response = await fetch("http://localhost:8080/employee/create", {
+            method: "POST",
+            headers: {
+                'authorization': Cookies.get("token")
+            },
+            body: formData
+        });
+
+        response = await response.json();
+
+        if(response.ok){
+            toast.success("Colaborador cadastrado com sucesso!");
+            clearFields();
+        }
+
+    };
+
+    const clearFields = () => {
+        setName("");
+        setEmail("");
+        setPassword("");
+        setPicture(null);
+        setAccessLevel("");
     }
 
     return (
@@ -86,6 +123,7 @@ const EmployeeRegister = () => {
                         <Form.Label>Foto do Pet</Form.Label>
                             <Form.Control 
                                 type="file" 
+                                accept="image/*"
                                 onChange={(e) => setPicture(e.target.files[0])} 
                             />
                             {picture && (
@@ -108,6 +146,7 @@ const EmployeeRegister = () => {
                     </Col>
                 </Row>
             </Form>
+            <Toaster />
         </Container>    
     )
 }
