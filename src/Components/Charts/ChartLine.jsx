@@ -33,6 +33,7 @@ export default function ChartLine() {
     
       // Opções de exemplo
       const options = {
+        responsive: true,
         scales: {
           y: {
             beginAtZero: true,
@@ -41,7 +42,7 @@ export default function ChartLine() {
       };
     
       return (
-        <div className="chart-container">
+        <div>
           <h2>Vendas Mensais</h2>
           <Line data={data} options={options} />
         </div>

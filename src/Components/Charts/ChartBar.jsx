@@ -17,6 +17,7 @@ export default function ChartBar() {
     
       // Opções de exemplo
       const options = {
+        responsive: true,
         scales: {
           y: {
             beginAtZero: true,
@@ -25,7 +26,7 @@ export default function ChartBar() {
       };
     
       return (
-        <div className="chart-container">
+        <div>
           <h2>Vendas Mensais</h2>
           <Bar data={data} options={options} />
         </div>
