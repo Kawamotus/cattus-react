@@ -3,7 +3,8 @@ import './AlertCard.css';
 
 const RecentEntry = () => {
   return (
-    <div>
+    //abaixo do <> vai o map que retornara a quantidade que preciso de animais do banco
+    <>
       <Card className="alert-card mb-3">
       <div className="d-flex">
         <Card.Img variant="left" src="imgs/gato-persa-02-800x450.jpg" className="alert-card-img" />
@@ -13,7 +14,7 @@ const RecentEntry = () => {
         </Card.Body>
       </div>
     </Card>
-    </div>
+    </>
   )
 }
 

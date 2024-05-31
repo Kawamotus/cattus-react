@@ -11,10 +11,11 @@ const Home = () => {
     <Container fluid="lg">
       
       <Row>
+          <h2>Pets que precisam da sua atencao</h2>
           <Col><PetCard /></Col> 
           <Col><PetCard /></Col>
           <Col><PetCard /></Col>
-          <Col><PetCard /></Col>    
+          <Col><PetCard /></Col>  
       </Row>
       <Row style={{}}>
         <Col sm={8}>
@@ -25,21 +26,9 @@ const Home = () => {
         <Col sm={4} >
           <h2 className="text-center mt-5">Lista de Alertas</h2>
           <div className="container mt-3">
-            <RecentEntry
-              foto="https://via.placeholder.com/100"
-              nome="Alerta 1"
-              nivelAlerta="Alto"
-            />
-            <RecentEntry
-              foto="https://via.placeholder.com/100"
-              nome="Alerta 2"
-              nivelAlerta="Médio"
-            />
-            <RecentEntry
-              foto="https://via.placeholder.com/100"
-              nome="Alerta 3"
-              nivelAlerta="Baixo"
-            />
+            <RecentEntry />
+            <RecentEntry />
+            <RecentEntry />
       </div>
         </Col>
       </Row>
