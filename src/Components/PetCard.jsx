@@ -10,7 +10,7 @@ const PetCard = ({border, name, img, id}) => {
 
   return <>
     <Card border="" style={{ width: '18rem' }} key={id}>
-      <Card.Img variant="top" src={img} style={{}}/>
+      <Card.Img variant="top" src={img} style={{objectFit: "cover", height: "300px"}}/>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Spinner } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
 import Cookies from 'js-cookie';
 
@@ -16,6 +16,8 @@ const PetRegistration = () => {
     const [size, setSize] = React.useState("");
     const [comorbidities, setComorbidities] = React.useState("");
     const [observations, setObservations] = React.useState("");
+
+    const [loading, setLoading] = React.useState(false);
 
 
     const [imgData, setImgData] = React.useState({
@@ -47,6 +49,8 @@ const PetRegistration = () => {
             toast.error("Preencha todos os campos!");
         }  
 
+        setLoading(true);
+
         const formData = new FormData();
         formData.append("petName", petName);
         formData.append("petBirth", birthDate);
@@ -75,6 +79,8 @@ const PetRegistration = () => {
         response = await response.json();
 
         if(response.ok){
+            //e aqui finalizar ele
+            setLoading(false);
             toast.success("Pet cadastrado com sucesso!");
             clearFields();
         }
@@ -278,7 +284,13 @@ const PetRegistration = () => {
             <Button variant="primary" type="submit" style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}>
             Cadastrar
             </Button>
-            {/* <Button onClick={clearFields} style={{marginLeft: "25px"}}>Limpar</Button> */}
+            {loading && (
+                <div className="text-center">
+                <Spinner animation="border" role="status">
+                    <span className="sr-only">Carregando...</span>
+                </Spinner>
+                </div>
+            )}
             <Toaster />
         </Form>
         </div>
