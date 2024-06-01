@@ -1,6 +1,8 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
 }
 
 .sidenav {
@@ -30,27 +32,33 @@ body {
     display: flex;
 }
 .sidenav a:hover, .sidenav a.active {
-    background-color: red;
+    background-color: #670000;
     color: white;
 }
 .sidenav .closebtn {
     position: absolute;
-    top: 0;
+    top: 18px;
     right: 15px;
     font-size: 20px;
     margin-left: 50px;
+    border: 0;
 }
+
+.closebtn:hover{
+    background-color: #a00000;
+    transition-duration: 0.5s;
+}
+
 #main {
     transition: margin-left .5s;
-    padding: 16px;
 }
 .openbtn {
     font-size: 30px;
     cursor: pointer;
-    background-color: red;
+    background-color: #670000;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 5px 15px;
     border-radius: 5px;
 }
 .shifted {
@@ -213,7 +221,7 @@ input {
   }
   
   .confirm-button {
-    background-color: red;
+    background-color: #670000;
     color: white;
   }
   

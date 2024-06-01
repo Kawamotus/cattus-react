@@ -8,8 +8,8 @@ import RecentEntry from '../Components/RecentEntry'
 
 const Home = () => {
   return (
+    
     <Container fluid="lg">
-      
       <Row>
           <h2>Pets que precisam da sua atencao</h2>
           <Col><PetCard /></Col> 

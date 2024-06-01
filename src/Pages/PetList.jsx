@@ -1,73 +1,67 @@
-import React from 'react'
+import React from 'react';
 import PetCard from '../Components/PetCard';
 import { Col, Container, Row, Spinner, Form, Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
 
-
-
 const PetList = () => {
-
   document.title = "Lista de Pets";
 
   const [items, setItems] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
-  const [page, setPage] = React.useState(1);
+  const [skip, setSkip] = React.useState(0);
+  const [limit, setLimit] = React.useState(4);
   const [hasMore, setHasMore] = React.useState(true);
-  const [filter, setFilter] = React.useState("");
-  const [search, setSearch] = React.useState("");
-  
+  const observer = React.useRef();
 
-  const fetchData = async (page) =>{
+  const fetchData = async (skip, limit) => {
     setLoading(true);
-    try{
-
-        const response = await fetch(`http://localhost:8080/animal/select-all/${Cookies.get("company")}`, {
-          method: "GET",
-          headers: {
-              'authorization': Cookies.get("token")
-          }
-        });
-
-
-        if(!response.ok){
-          throw new Error("Estamos enfrentando alguns problemas, tente novamente mais tarde")
+    try {
+      const response = await fetch(`http://localhost:8080/animal/select-all/${Cookies.get("company")}?skip=${skip}&limit=${limit}`, {
+        method: "GET",
+        headers: {
+          'authorization': Cookies.get("token")
         }
-  
-        const data = await response.json();
-        setItems(() => [...items, ...data.result]);
+      });
 
+      console.log(response.status)
 
-      
-    }catch(err){
-      setError(err);
-    }finally{
+      if(response.status === 500){
+        throw new Error("Sessao expirada, refaca o login para acessar!");
+
+      }
+
+      if (!response.ok) {
+        throw new Error("Estamos enfrentando alguns problemas, tente novamente mais tarde");
+      }
+
+      const data = await response.json();
+      console.log('Fetched Data:', data);
+      setItems((prevItems) => [...prevItems, ...data.result]);
+      setHasMore(data.result.length === limit);
+    } catch (error) {
+      setError(error);
+    } finally {
       setLoading(false);
     }
-
-  }
-
-  React.useEffect(() => {
-    fetchData(page);
-  }, [page]);
+  };
 
   React.useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !loading && hasMore) {
-        setPage(() => page + 1);
+    fetchData(skip, limit);
+  }, [skip, limit]);
+
+  const lastItemRef = React.useCallback((node) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasMore) {
+        setSkip((prevSkip) => prevSkip + limit);
       }
-    }
+    });
+    if (node) observer.current.observe(node);
+  }, [loading, hasMore, limit]);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    }
-  }, [loading, hasMore]);
-
-
-
-
-  if(error){
+  if (error) {
     return (
       <Container className="text-center mt-5">
         <p>Erro: {error.message}</p>
@@ -75,40 +69,27 @@ const PetList = () => {
     );
   }
 
+
   return (
-
     <Container>
-
-      <h1>Barra de Pesquisa com Filtros</h1>
-      <Form>
-        <Form.Group>
-          <Form.Control type="text" placeholder="Pesquisar..." value={search} onChange={(e) => {
-            setSearch(e.target.value)
-            fetchData()
-            }} />
-            <p>{search}</p>
-        </Form.Group>
-        <Form.Group>
-          <Form.Control as="select" value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="">Todos</option>
-            <option value="filtro1">Filtro 1</option>
-            <option value="filtro2">Filtro 2</option>
-            <option value="filtro3">Filtro 3</option>
-          </Form.Control>
-        </Form.Group>
-        <Button variant="primary" onClick={fetchData}>Pesquisar</Button>
-      </Form>
-        <br />
+      <h1>Lista de Pets</h1>
       <Row>
-
-          {items.map(item => (
-            <Col>
-              <PetCard name={item.petName} img={item.petPicture} key={item._id}/>
-            </Col>
-          ))}   
-
+        {items.map((item, index) => {
+          if (items.length === index + 1) {
+            return (
+              <Col key={item._id}  ref={lastItemRef}>
+                <PetCard name={item.petName} img={item.petPicture} />
+              </Col>
+            );
+          } else {
+            return (
+              <Col key={item._id}>
+                <PetCard name={item.petName} img={item.petPicture}  />
+              </Col>
+            );
+          }
+        })}
       </Row>
-
       {loading && (
         <div className="text-center">
           <Spinner animation="border" role="status">
@@ -116,18 +97,13 @@ const PetList = () => {
           </Spinner>
         </div>
       )}
-
       {!hasMore && !loading && (
         <div className="text-center">
           <p>Não há mais itens para carregar.</p>
         </div>
       )}
-
     </Container>
-    
   );
+};
 
-
-}
-
-export default PetList
+export default PetList;

@@ -47,6 +47,7 @@ const PetRegistration = () => {
         e.preventDefault();
         if(!petName || !birthDate || !entry || !gender || !animalType || !breed || !size || !comorbidities || !observations){
             toast.error("Preencha todos os campos!");
+            return;
         }  
 
         setLoading(true);
