@@ -56,7 +56,7 @@ const Sidebar = () => {
           <button className="closebtn" onClick={toggleSidebar}><FontAwesomeIcon icon={faTimes} /></button>
           <div className='user-img'>
             <img src={Cookies.get("picture")} alt="Username" /><br />
-            <p>{Cookies.get("name")}</p>
+            <p><strong>{Cookies.get("name")}</strong></p>
           </div>
           
           <NavLink to="/">

@@ -1,7 +1,7 @@
 import React from 'react';
-import PetCard from '../Components/PetCard';
 import { Col, Container, Row, Spinner, Form, Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
+import EmployeeCard from '../Components/EmployeeCard';
 
 const EmployeeList = () => {
     document.title = "Lista de Funcionarios";
@@ -29,7 +29,6 @@ const EmployeeList = () => {
         }
   
         const data = await response.json();
-        console.log('Fetched Data:', data);
         setItems((prevItems) => [...prevItems, ...data.result]);
         setHasMore(data.result.length === limit);
       } catch (error) {
@@ -37,6 +36,8 @@ const EmployeeList = () => {
       } finally {
         setLoading(false);
       }
+
+      
     };
   
     React.useEffect(() => {
@@ -62,6 +63,7 @@ const EmployeeList = () => {
       );
     }
   
+    console.log(items);
   
     return (
       <Container>
@@ -71,13 +73,13 @@ const EmployeeList = () => {
             if (items.length === index + 1) {
               return (
                 <Col key={item._id}  ref={lastItemRef}>
-                  <PetCard name={item.petName} img={item.petPicture} key={item._id} />
+                  <EmployeeCard name={item.employeeName} img={item.employeePicture} key={item._id} />
                 </Col>
               );
             } else {
               return (
                 <Col key={item._id}>
-                  <PetCard name={item.petName} img={item.petPicture}  />
+                  <EmployeeCard name={item.employeeName} img={item.employeePicture}  />
                 </Col>
               );
             }
