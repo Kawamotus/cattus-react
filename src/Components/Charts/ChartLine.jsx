@@ -43,7 +43,7 @@ export default function ChartLine() {
     
       return (
         <div>
-          <h2>Vendas Mensais</h2>
+          <h2>Tempo gasto (por dia)</h2>
           <Line data={data} options={options} />
         </div>
       );

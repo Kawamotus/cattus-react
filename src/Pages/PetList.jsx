@@ -2,6 +2,9 @@ import React from 'react';
 import PetCard from '../Components/PetCard';
 import { Col, Container, Row, Spinner, Form, Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
+import TituloPagina from '../Components/TituloPagina';
 
 const PetList = () => {
   document.title = "Lista de Pets";
@@ -24,8 +27,6 @@ const PetList = () => {
         }
       });
 
-      console.log(response.status)
-
       if(response.status === 500){
         throw new Error("Sessao expirada, refaca o login para acessar!");
 
@@ -36,7 +37,6 @@ const PetList = () => {
       }
 
       const data = await response.json();
-      console.log('Fetched Data:', data);
       setItems((prevItems) => [...prevItems, ...data.result]);
       setHasMore(data.result.length === limit);
     } catch (error) {
@@ -69,22 +69,24 @@ const PetList = () => {
     );
   }
 
+  console.log(items)
 
   return (
     <Container>
-      <h1>Lista de Pets</h1>
+      <TituloPagina titulo="Lista de Pets" />
+      <br />
       <Row>
         {items.map((item, index) => {
           if (items.length === index + 1) {
             return (
               <Col key={item._id}  ref={lastItemRef}>
-                <PetCard name={item.petName} img={item.petPicture} />
+                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"}/>
               </Col>
             );
           } else {
             return (
               <Col key={item._id}>
-                <PetCard name={item.petName} img={item.petPicture}  />
+                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} />
               </Col>
             );
           }

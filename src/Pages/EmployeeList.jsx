@@ -1,6 +1,8 @@
 import React from 'react';
 import { Col, Container, Row, Spinner, Form, Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
+
+import TituloPagina from '../Components/TituloPagina';
 import EmployeeCard from '../Components/EmployeeCard';
 
 const EmployeeList = () => {
@@ -67,13 +69,14 @@ const EmployeeList = () => {
   
     return (
       <Container>
-        <h1>Lista de Funcionarios</h1>
+        <TituloPagina titulo="Lista de Funcionarios" />
+        <br />
         <Row>
           {items.map((item, index) => {
             if (items.length === index + 1) {
               return (
                 <Col key={item._id}  ref={lastItemRef}>
-                  <EmployeeCard name={item.employeeName} img={item.employeePicture} key={item._id} />
+                  <EmployeeCard name={item.employeeName} img={item.employeePicture} key={item._id} acessLevel={item.employeeAccessLevel == 1 ? "Administrador" : "Usuario comum"} />
                 </Col>
               );
             } else {

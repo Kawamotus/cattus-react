@@ -5,26 +5,41 @@ import { Col, Container, Row } from 'react-bootstrap'
 import ChartPie from '../Components/Charts/ChartPie'
 import PetCard from '../Components/PetCard'
 import RecentEntry from '../Components/RecentEntry'
+import TituloPagina from '../Components/TituloPagina'
+import ChartDoughnut from '../Components/Charts/ChartDoughnut'
 
 const Home = () => {
+
+  const dogActivitiesData = [9, 15];
+  const catActivitiesData = [16, 8]
+
   return (
     
     <Container fluid="lg">
+      <TituloPagina titulo="Pets que precisam de sua atencao: " />
+      <br />
       <Row>
-          <h2>Pets que precisam da sua atencao</h2>
+          
           <Col><PetCard /></Col> 
           <Col><PetCard /></Col>
           <Col><PetCard /></Col>
           <Col><PetCard /></Col>  
       </Row>
+      <br />
+      <br />
       <Row style={{}}>
-        <Col sm={8}>
-          <ChartBar /><br />
+        <Col sm={4}>
+          {/* <ChartBar /><br />
           <ChartLine /><br />
-          <ChartPie /><br />
+          <ChartPie /><br /> */}
+          {/* <ChartDoughnut titulo="Media de atividade dos Gatos" dataArray={[10, 8]}/> <br /> */}
+          <ChartDoughnut data={dogActivitiesData} titulo="Tempo de atividade (media) - Caes" /> <br />
+        </Col>
+        <Col sm={4}>
+          <ChartDoughnut data={catActivitiesData} titulo="Tempo de atividade (media) - Gatos" /> <br />
         </Col>
         <Col sm={4} >
-          <h2 className="text-center mt-5">Lista de Alertas</h2>
+          <h2 className="text-center mt-5">Adicionados recentemente</h2>
           <div className="container mt-3">
             <RecentEntry />
             <RecentEntry />
