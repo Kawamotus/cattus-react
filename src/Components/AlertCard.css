@@ -3,15 +3,15 @@
     flex-direction: row;
     align-items: center;
     border: 1px solid #670000;
-    border-radius: 10px;
     overflow: hidden;
+    border-color: #000;
   }
   
   .alert-card-img {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-right: 1px solid #670000;
+    border-right: 0px solid #000;
   }
   
   .alert-card .card-body {
@@ -21,10 +21,10 @@
   
   .alert-card .card-title {
     font-size: 1.25rem;
-    color: #670000;
+    color: #000;
   }
   
   .alert-card .card-text {
-    color: #670000;
+    color: #000;
   }
   

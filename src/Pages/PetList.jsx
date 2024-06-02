@@ -2,8 +2,6 @@ import React from 'react';
 import PetCard from '../Components/PetCard';
 import { Col, Container, Row, Spinner, Form, Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
 import TituloPagina from '../Components/TituloPagina';
 
 const PetList = () => {
