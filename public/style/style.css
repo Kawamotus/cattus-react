@@ -271,3 +271,8 @@ input {
     height: 400px;
   }
   
+  .card-camera {
+    width: 100%;
+    max-width: 35rem;
+    background-color: #ffffff;
+  }

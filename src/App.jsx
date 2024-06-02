@@ -9,6 +9,7 @@ import Home from './Pages/Home';
 import EmployeeRegister from './Pages/EmployeeRegister';
 import PetList from './Pages/PetList';
 import EmployeeList from './Pages/EmployeeList';
+import CameraList from './Pages/CameraList';
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
           <Route path='petRegister' element={<PetRegistration />} />
           <Route path="employees" element={<EmployeeList />} />
           <Route path='employeeRegister' element={<EmployeeRegister />} />
+          <Route path='camera' element={<CameraList />} />
         </Routes>
     </BrowserRouter>
   )
