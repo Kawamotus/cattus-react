@@ -68,7 +68,7 @@ const Home = () => {
         </div>}          
           {items.slice(0, 4).map(item => (
             <Col key={item._id}>
-              <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"}/>
+              <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id}/>
             </Col>
           ))}
       </Row>

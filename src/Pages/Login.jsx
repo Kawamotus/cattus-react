@@ -73,7 +73,7 @@ const Login = () => {
 
     if(!logado){
         return <>
-        <div className="login-container">
+        <div className="login-container" >
             <div className="login-box">
                 <img src="/imgs/logo-side-text.png" alt="Cattus" className="logo" />
                 <form onSubmit={logar}>

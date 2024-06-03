@@ -10,6 +10,7 @@ import EmployeeRegister from './Pages/EmployeeRegister';
 import PetList from './Pages/PetList';
 import EmployeeList from './Pages/EmployeeList';
 import CameraList from './Pages/CameraList';
+import PetDetail from './Pages/PetDetail';
 
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="employees" element={<EmployeeList />} />
           <Route path='employeeRegister' element={<EmployeeRegister />} />
           <Route path='camera' element={<CameraList />} />
+          <Route path='petDetail/:id' element={<PetDetail />} />
         </Routes>
     </BrowserRouter>
   )

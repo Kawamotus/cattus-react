@@ -2,10 +2,10 @@ import React from 'react';
 import { Form, Button, Row, Col, Spinner } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
 import Cookies from 'js-cookie';
+import { useParams } from 'react-router-dom';
+import TituloPagina from '../Components/TituloPagina';
 
 const PetRegistration = () => {
-
-    document.title = "Cadastro de Pets";
 
     const [petName, setPetName] = React.useState("");
     const [birthDate, setBirthDate] = React.useState("");
@@ -16,6 +16,8 @@ const PetRegistration = () => {
     const [size, setSize] = React.useState("");
     const [comorbidities, setComorbidities] = React.useState("");
     const [observations, setObservations] = React.useState("");
+
+    document.title = "Cadastro de Pets";
 
     const [loading, setLoading] = React.useState(false);
 
@@ -106,8 +108,9 @@ const PetRegistration = () => {
     
     //////adicionar icones nos itens
     return (
-        <div className="container mt-5">
-        <h1 className="text-center mb-4" style={{ color: '#ff0000' }}>Cadastro de Animais</h1>
+        <div className="container">
+        <TituloPagina titulo="Cadastro de Animais" />
+        <br />
         <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
             <Col>
@@ -294,6 +297,7 @@ const PetRegistration = () => {
             )}
             <Toaster />
         </Form>
+        <br /><br />
         </div>
     );
 };

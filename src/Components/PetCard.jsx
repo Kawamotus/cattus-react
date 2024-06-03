@@ -1,6 +1,6 @@
 import { Button, Card, ListGroup } from "react-bootstrap";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,7 +18,9 @@ const PetCard = ({border, name, img, id, sexo}) => {
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text><FontAwesomeIcon icon={sexo == "Fêmea" ? faVenus : faMars} /> {sexo}</Card.Text>
-        <Button variant="danger" text="dark" onClick={handleClick}>Ver detalhes</Button>
+        <Link to={`/petDetail/${id}`}> 
+          <Button variant="danger" text="dark" onClick={handleClick}>Ver detalhes</Button>
+        </Link>
       </Card.Body>
     </Card>
     <br />
