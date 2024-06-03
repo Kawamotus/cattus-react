@@ -14,6 +14,7 @@ const PetRegistration = () => {
     const [animalType, setAnimalType] = React.useState("");
     const [breed, setBreed] = React.useState("");
     const [size, setSize] = React.useState("");
+    const [castrated, setCastrated] = React.useState("");
     const [comorbidities, setComorbidities] = React.useState("");
     const [observations, setObservations] = React.useState("");
 
@@ -62,6 +63,7 @@ const PetRegistration = () => {
         formData.append("petCharacteristics.petType", animalType);
         formData.append("petCharacteristics.petBreed", breed);
         formData.append("petCharacteristics.petSize", size);
+        formData.append("petCharacteristics.petCastrated", castrated);
         formData.append("petComorbidities", comorbidities);
         formData.append("petObs", observations);
         formData.append("petVaccCard", imgData.vaccinationCard);
@@ -101,6 +103,7 @@ const PetRegistration = () => {
         setSize("");
         setComorbidities("");
         setObservations("");
+        setCastrated("");
         setPreviewPetPhoto(null);
         setPreviewVaccinationCard(null);
     }
@@ -113,7 +116,7 @@ const PetRegistration = () => {
         <br />
         <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
-            <Col>
+            <Col sm={12} style={{marginBottom: "10px"}}>
                 <Form.Group controlId="formName">
                 <Form.Label>Nome</Form.Label>
                 <Form.Control
@@ -123,6 +126,21 @@ const PetRegistration = () => {
                     value={petName}
                     onChange={(e) => setPetName(e.target.value)}
                 />
+                </Form.Group>
+            </Col>
+            <Col>
+                <Form.Group controlId="formCastrated">
+                <Form.Label>Castrado?</Form.Label>
+                <Form.Control
+                    as="select"
+                    name="castrated"
+                    value={castrated}
+                    onChange={(e) => setCastrated(e.target.value)}
+                >
+                    <option>Selecione...</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </Form.Control>
                 </Form.Group>
             </Col>
             <Col>

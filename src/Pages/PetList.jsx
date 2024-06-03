@@ -1,8 +1,13 @@
 import React from 'react';
 import PetCard from '../Components/PetCard';
-import { Col, Container, Row, Spinner, Form, Button } from 'react-bootstrap';
+import { Col, Container, Row, Spinner, Form, Button, InputGroup } from 'react-bootstrap';
 import Cookies from 'js-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 import TituloPagina from '../Components/TituloPagina';
+
+
 
 const PetList = () => {
   document.title = "Lista de Pets";
@@ -13,6 +18,10 @@ const PetList = () => {
   const [skip, setSkip] = React.useState(0);
   const [limit, setLimit] = React.useState(4);
   const [hasMore, setHasMore] = React.useState(true);
+
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [filterType, setFilterType] = React.useState('');
+
   const observer = React.useRef();
 
   const fetchData = async (skip, limit) => {
@@ -67,12 +76,121 @@ const PetList = () => {
     );
   }
 
+  const searchPets = async (query, age, type) => {
+    let searchUrl = `http://localhost:8080/pets/search?query=${query}`;
+    if (age) searchUrl += `&age=${age}`;
+    if (type) searchUrl += `&type=${type}`;
+
+    setLoading(true);
+    try {
+      const response = await fetch(searchUrl, {
+        method: 'GET',
+        headers: {
+          'authorization': Cookies.get("token")
+        }
+      });
+      const data = await response.json();
+      setPets(data);
+    } catch (error) {
+      console.error('Erro ao buscar pets:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    searchPets(searchQuery, filterAge, filterType);
+  };
+
   console.log(items)
 
   return (
     <Container>
-      <TituloPagina titulo="Lista de Pets" />
-      <br />
+      
+      <Row className="mb-3" >
+        <Col md={4}>
+          <h1 style={{marginTop: "10px"}} >Lista de Pets</h1>
+        </Col>
+        <Col md={4} style={{marginTop: "20px"}}>
+          <Form.Group controlId="filterType">
+            <Form.Control
+              as="select"
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+            >
+              <option value="">--</option>
+              <option value="dog">Cachorro</option>
+              <option value="cat">Gato</option>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col md={4} style={{marginTop: "20px"}}>
+          <InputGroup>
+            <Form.Control
+              type="text"
+              placeholder="Pesquisar..."
+              value={searchQuery}
+              onChange={handleSearchSubmit}
+            />
+            <Button variant="outline-secondary">
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </Button>
+          </InputGroup>
+        </Col>
+        
+      </Row>
+       
+   
+      
+      {/* <Form className="mb-4">
+        <Row>
+          <Col md={4}>
+            <Form.Group controlId="filterAge">
+              <Form.Label>Gênero</Form.Label>
+              <Form.Control
+                as="select"
+                value={filterAge}
+                onChange={(e) => setFilterAge(e.target.value)}
+              >
+                <option value="">-- </option>
+                <option value="puppy">Filhote</option>
+                <option value="adult">Adulto</option>
+                <option value="senior">Sênior</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="filterType">
+              <Form.Label>Tipo</Form.Label>
+              <Form.Control
+                as="select"
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+              >
+                <option value="">--</option>
+                <option value="dog">Cachorro</option>
+                <option value="cat">Gato</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="filterCastrated">
+              <Form.Label>Castrado?</Form.Label>
+              <Form.Control
+                as="select"
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+              >
+                <option value="">--</option>
+                <option value="dog">Cachorro</option>
+                <option value="cat">Gato</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+      </Form> */}
+
       <Row>
         {items.map((item, index) => {
           if (items.length === index + 1) {

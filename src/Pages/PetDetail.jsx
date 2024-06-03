@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Form, Button, Spinner, Image, Row, Col, Modal, ButtonGroup } from 'react-bootstrap';
+import { Container, Form, Button, Spinner, Image, Row, Col, Modal, ButtonGroup, FormGroup } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import toast, { Toaster } from 'react-hot-toast';
@@ -19,6 +19,7 @@ const PetDetail = () => {
   const [size, setSize] = React.useState("");
   const [comorbidities, setComorbidities] = React.useState("");
   const [observations, setObservations] = React.useState("");
+  const [castrated, setCastrated] = React.useState("");
   const [picture, setPicture] = React.useState(null);
   const [vacCard, setVacCard] = React.useState(null);
 
@@ -68,10 +69,13 @@ const PetDetail = () => {
     setObservations(data.petObs);
     setPicture(data.petPicture);
     setVacCard(data.petVaccCard);
+    setCastrated(data.petCharacteristics.petCastrated);
 
     setImgOriginal(data.petPicture);
 
     document.title = data.petName
+
+    console.log(data);
     
   }
 
@@ -101,7 +105,8 @@ const PetDetail = () => {
         petCharacteristics: {
           petType: animalType,
           petBreed: breed,
-          petSize: size
+          petSize: size,
+          petCastrated: castrated
         },
         petComorbidities: comorbidities,
         petObs: observations,
@@ -136,7 +141,7 @@ const PetDetail = () => {
       toast.success(petName + " deletado com sucesso, redirecionando...");
       setTimeout(() => {
         navigate('/petList'); 
-      }, 2000); 
+      }, 1000); 
     }
   }
 
@@ -204,6 +209,7 @@ const PetDetail = () => {
     );
   }
 
+
   return (
     <Container>
       <Toaster />
@@ -213,12 +219,12 @@ const PetDetail = () => {
         <Row>
 
           <Col sm={4}>
-            <Image src={picture} style={{objectFit: "cover", height: "450px", width: "450px", borderRadius: "10px"}} thumbnail  />
+            <Image src={picture} style={{objectFit: "cover", height: "450px", width: "450px", borderRadius: "10px", borderColor: "#ff0000"}} thumbnail  />
           </Col>
 
-          <Col sm={4}>
+          <Col sm={4} style={{}}>
 
-          <Form.Group controlId="formAngle" style={{marginBottom: "20px"}}>
+          <Form.Group controlId="formAngle" style={{marginBottom: "10px"}}>
                 <Form.Label>Digite o angulo em graus para girar a imagem: </Form.Label>
                 <Form.Control
                     type="number"
@@ -231,6 +237,22 @@ const PetDetail = () => {
                 
           </Form.Group>
           <Button onClick={handleRotate} disabled={desativado} >Rotacionar</Button>
+
+          <Form.Group controlId='alertLevel' style={{marginTop: "10px"}}>
+            {/* {deixar isso dinamico} */}
+          <br />
+            <div style={{display: "flex", width: "auto", height: "auto", backgroundColor: "", borderRadius: "20px", justifyContent: "space-between"}}> 
+            <p><b>Nível do alerta: </b></p>    
+                <div style={{ display: "flex", width: "290px", height: "25px", backgroundColor: "#ff0000", borderRadius: "20px", justifyContent: "center"}}> 
+                <p style={{color: "#fff"}}>ESTADO CRÍTICO</p>
+                </div>
+
+                
+            </div>
+          </Form.Group>
+         
+
+
 
           </Col>
 
@@ -350,6 +372,22 @@ const PetDetail = () => {
           
           <Col>
           <br />
+
+          <Form.Group controlId="formCastrated" style={{marginBottom: "20px"}}>
+                <Form.Label>Castrado?</Form.Label>
+                <Form.Control
+                    as="select"
+                    name="castrated"
+                    value={castrated}
+                    onChange={(e) => setCastrated(e.target.value)}
+                    disabled={desativado}
+                >
+                    <option>Selecione...</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </Form.Control>
+            </Form.Group>
+
             <Form.Group controlId="formObservations" className="mb-3">
               <Form.Label>Observações</Form.Label>
               <Form.Control
