@@ -66,7 +66,7 @@ const Home = () => {
           <span className="sr-only">Carregando...</span>
         </Spinner>
         </div>}          
-          {items.slice(0, 4).map(item => (
+          {items.slice(4, 8).map(item => (
             <Col key={item._id}>
               <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id}/>
             </Col>
@@ -84,8 +84,8 @@ const Home = () => {
         <Col sm={4} >
           <h2 className="text-center mt-5">Adicionados recentemente</h2>
           <div className="container mt-3">
-            {items.slice(4, 8).map(item => (
-              <RecentEntry name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} />
+            {items.slice(0, 4).map(item => (
+              <RecentEntry name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} key={item._id} />
             ))}
             
       </div>

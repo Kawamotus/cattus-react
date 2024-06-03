@@ -11,6 +11,9 @@ import PetList from './Pages/PetList';
 import EmployeeList from './Pages/EmployeeList';
 import CameraList from './Pages/CameraList';
 import PetDetail from './Pages/PetDetail';
+import CameraDetail from './Pages/CameraDetail';
+import Error404 from './Pages/Error404';
+import Supplies from './Pages/Supplies';
 
 
 const App = () => {
@@ -34,6 +37,9 @@ const App = () => {
           <Route path='employeeRegister' element={<EmployeeRegister />} />
           <Route path='camera' element={<CameraList />} />
           <Route path='petDetail/:id' element={<PetDetail />} />
+          <Route path='cameraDetail' element={<CameraDetail />} />
+          <Route path='supplies' element={<Supplies />} />
+          <Route path='*' element={<Error404 />} />
         </Routes>
     </BrowserRouter>
   )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Form, Button, Spinner, Image, Row, Col, Modal } from 'react-bootstrap';
+import { Container, Form, Button, Spinner, Image, Row, Col, Modal, ButtonGroup } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import toast, { Toaster } from 'react-hot-toast';
@@ -27,6 +27,7 @@ const PetDetail = () => {
 
   const [loading, setLoading] = React.useState(false);
   const [show, setShow] = React.useState(false);
+  const [mensagem, setMensagem] = React.useState("")
 
   const [imgOriginal, setImgOriginal] = React.useState("");
 
@@ -162,6 +163,40 @@ const PetDetail = () => {
     setPicture(() => dados.url)
   
   }
+
+
+  const handleReport = async () => {
+
+    setDesativado(true);
+    setMensagem("Gerando relatorio, aguarde...")
+
+    const report = await fetch(`http://localhost:8080/report/${id}`, {
+      method: "GET",
+      headers: {
+        'authorization': Cookies.get("token")
+      }
+    });
+
+
+    const blob = await report.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a')
+    a.href = url;
+    a.download = (petName + '-relatorio.pdf');
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+
+    setDesativado(false);
+    setMensagem("");
+  }
+
+
+
+
+
+
 
 
 
@@ -335,9 +370,13 @@ const PetDetail = () => {
                   disabled={desativado}
               />
               </Form.Group>
-              <Button onClick={() => setDesativado(!desativado)}>{desativado ? "Habilitar" : "Desabilitar"} edicao</Button>
-              <Button type='submit' variant="success" style={{ marginLeft: "10px" }} disabled={desativado} >Atualizar </Button>
-              <Button variant="danger" style={{ marginLeft: "10px" }} disabled={desativado} onClick={handleShow}>Excluir </Button>
+              <ButtonGroup>
+                <Button variant='warning' onClick={() => setDesativado(!desativado)} >{desativado ? "Habilitar" : "Desabilitar"} </Button>
+                <Button type='submit' variant="success" style={{ marginLeft: "10px" }} disabled={desativado} >Atualizar </Button>
+                <Button variant="danger" style={{ marginLeft: "10px" }} disabled={desativado} onClick={handleShow}>Excluir </Button>
+                <Button variant='success' style={{marginLeft: "10px"}} onClick={handleReport} disabled={desativado}>Gerar relatorio</Button>
+              </ButtonGroup>
+              <p>{mensagem}</p>
           </Col>
           
         </Row>
