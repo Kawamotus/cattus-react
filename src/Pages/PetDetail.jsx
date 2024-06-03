@@ -193,17 +193,9 @@ const PetDetail = () => {
   }
 
 
-
-
-
-
-
-
-
   if(loading){ 
     return (
       <div className="text-center">
-        <Toaster />
         <br /><br /><br />
         <Spinner animation="border" role="status">
           <span className="sr-only"></span>

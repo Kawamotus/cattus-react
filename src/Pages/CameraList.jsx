@@ -1,10 +1,67 @@
-import React from 'react'
-import { Container, Card, Row, Col } from 'react-bootstrap'
+import React from 'react';
+import { Container, Row, Col, Spinner, Card, Button } from 'react-bootstrap';
+import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+
 import TituloPagina from '../Components/TituloPagina'
 
 const CameraList = () => {
+
+  const [items, setItems] = React.useState([]);
+  const [loading, setLoading] = React.useState(false)
+
   document.title = "Cameras";
 
+  const fetchData = async () => {
+
+    setLoading(true);
+
+    const response = await fetch(`http://localhost:8080/camera/select-all/${Cookies.get("company")}`, {
+      method: "GET",
+      headers: {
+        'authorization': Cookies.get("token")
+      }
+    });
+
+    if(response.status === 500){
+      throw new Error("Sessao expirada, refaca o login para acessar!");
+
+    }
+    if(response.status === 401){
+        throw new Error("Acesso nao autorizado, tente novamente mais tarde!");
+
+        }
+
+    if (!response.ok) {
+    throw new Error("Estamos enfrentando alguns problemas, tente novamente mais tarde");
+    }
+
+    const data = await response.json();
+
+    setItems(data.result)
+
+
+    setLoading(false);
+    console.log(data);
+
+  }
+
+  React.useEffect(() => {
+    fetchData();
+  }, [])
+
+  if(loading){
+    return (
+      <div className="text-center">
+        <br /><br /><br />
+        <Spinner animation="border" role="status">
+          <span className="sr-only"></span>
+        </Spinner>
+      </div>
+    )
+  }
 
   return (
     <Container>
@@ -13,37 +70,21 @@ const CameraList = () => {
       <Row style={{justifyContent: "center"}}>
         
         
-            <Col>
-            <div key="a" className="card-camera m-4 rounded-3 d-flex justify-content-center align-items-end" style={{ border: '2px solid rgba(0, 0, 0, 0.25)'}}>
-              <img className="rounded" src="imgs/cameraCachorro.jpg" alt="Cachorro no petshop" style={{objectFit: "cover", height: "372px"}} />
-              <div style={{ position: 'absolute', backgroundColor: '#ffffff', borderRadius: '25px', width: '15rem' }} className="mb-2 d-flex justify-content-end align-items-center">
-                <h4 className="mt-2 mb-2">Área de Lazer</h4>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="#" className="h-100 me-1 d-flex align-items-center justify-content-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="2.3em" height="2.3em" viewBox="-1.5 -1.5 18 18" style={{ backgroundColor: '#670000', borderRadius: '100%' }}>
-                    <path fill="#ffffff" d="M8.293 2.293a1 1 0 0 1 1.414 0l4.5 4.5a1 1 0 0 1 0 1.414l-4.5 4.5a1 1 0 0 1-1.414-1.414L11 8.5H1.5a1 1 0 0 1 0-2H11L8.293 3.707a1 1 0 0 1 0-1.414" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            </Col>
+        {items.map(item => (
+            <Col key={item._id} sm={6}>
 
-            <Col>
-            <div key="a" className="card-camera m-4 rounded-3 d-flex justify-content-center align-items-end" style={{ border: '2px solid rgba(0, 0, 0, 0.25)'}}>
-              <img className="rounded" src="imgs/cameraCachorro.jpg" alt="Cachorro no petshop" style={{objectFit: "cover", height: "372px"}} />
-              <div style={{ position: 'absolute', backgroundColor: '#ffffff', borderRadius: '25px', width: '15rem' }} className="mb-2 d-flex justify-content-end align-items-center">
-                <h4 className="mt-2 mb-2">Área de Lazer</h4>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="#" className="h-100 me-1 d-flex align-items-center justify-content-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="2.3em" height="2.3em" viewBox="-1.5 -1.5 18 18" style={{ backgroundColor: '#670000', borderRadius: '100%' }}>
-                    <path fill="#ffffff" d="M8.293 2.293a1 1 0 0 1 1.414 0l4.5 4.5a1 1 0 0 1 0 1.414l-4.5 4.5a1 1 0 0 1-1.414-1.414L11 8.5H1.5a1 1 0 0 1 0-2H11L8.293 3.707a1 1 0 0 1 0-1.414" />
-                  </svg>
-                </a>
-              </div>
-            </div>
+              <Card style={{ marginTop: "10px", marginBottom: "10px"}}>
+                <Card.Img variant="top" src={item.cameraPicture} style={{objectFit: "cover", height: "372px"}} />
+                <Card.Body>
+                  <Card.Text style={{paddingBottom: "15px"}}>
+                    <Link to={`/cameraDetail/${item._id}`}> 
+                      <Button style={{width: "100%", backgroundColor: "#670000", border: "#670000"}}> {item.cameraLocation} <FontAwesomeIcon icon={faArrowRight} /> </Button>
+                    </Link>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
             </Col>
-
- 
+        ))}
         
       </Row>
 
