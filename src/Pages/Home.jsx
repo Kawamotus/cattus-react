@@ -1,3 +1,4 @@
+import socket from '../socketio'
 import React from 'react'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
 import Cookies from 'js-cookie';
@@ -45,13 +46,13 @@ const Home = () => {
 
   React.useEffect(() => {
     fetchData()
-  }, [])
+  }, []);
+
+  socket.on("notification", (info) => console.log(info))
   
 
   const dogActivitiesData = [9, 15];
   const catActivitiesData = [16, 8];
-
-  console.log(items)
 
   ///////////////////         DAR UM JEITO DE ARRUMAR O PETS EM ALERTA PARA ALERTAS!!!
   return (
@@ -75,6 +76,7 @@ const Home = () => {
       <br />
       <br />
       <Row>
+      
         <Col sm={4}>
           <ChartDoughnut data={dogActivitiesData} titulo="Tempo de atividade (media) - Caes" /> <br />
         </Col>
