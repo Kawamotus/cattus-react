@@ -1,6 +1,8 @@
+import socket from '../socketio'
 import React from 'react'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
 import Cookies from 'js-cookie';
+import toast, { Toaster } from 'react-hot-toast';
 
 import PetCard from '../Components/PetCard'
 import RecentEntry from '../Components/RecentEntry'
@@ -14,6 +16,7 @@ const Home = () => {
   const [items, setItems] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
+  const [notification, setNotification] = React.useState([])
 
   async function fetchData(){
     setLoading(true);
@@ -42,6 +45,7 @@ const Home = () => {
   }
 
   React.useEffect(() => {
+
     fetchData();
   }, [])
   
@@ -53,6 +57,7 @@ const Home = () => {
   return (
     
     <Container fluid="lg">
+      <Toaster />
       <TituloPagina titulo="Pets que precisam de sua atencao: " />
       <br />
       <Row>
@@ -71,6 +76,7 @@ const Home = () => {
       <br />
       <br />
       <Row>
+      
         <Col sm={4}>
           <ChartDoughnut data={dogActivitiesData} titulo="Tempo de atividade (media) - Caes" /> <br />
         </Col>
