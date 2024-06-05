@@ -38,20 +38,16 @@ const Home = () => {
       const data = await response.json();
 
       setItems(data.result);
-      console.log(data);
-
       setLoading(false);
   }
 
   React.useEffect(() => {
-    fetchData()
+    fetchData();
   }, [])
   
 
   const dogActivitiesData = [9, 15];
   const catActivitiesData = [16, 8];
-
-  console.log(items)
 
   ///////////////////         DAR UM JEITO DE ARRUMAR O PETS EM ALERTA PARA ALERTAS!!!
   return (
