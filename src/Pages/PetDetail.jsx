@@ -1,8 +1,9 @@
 import React from 'react';
-import { Container, Form, Button, Spinner, Image, Row, Col, Modal, ButtonGroup, FormGroup } from 'react-bootstrap';
+import { Container, Form, Button, Spinner, Image, Row, Col, Modal, ButtonGroup } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import toast, { Toaster } from 'react-hot-toast';
+import { getData, updateData, deleteData } from '../Functions/Req';
 
 
 import TituloPagina from '../Components/TituloPagina';
@@ -30,8 +31,6 @@ const PetDetail = () => {
   const [show, setShow] = React.useState(false);
   const [mensagem, setMensagem] = React.useState("")
 
-  const [imgOriginal, setImgOriginal] = React.useState("");
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -39,15 +38,7 @@ const PetDetail = () => {
 
   const fetchData = async () => {
 
-    const response = await fetch(`http://localhost:8080/animal/select-one/${id}`, {
-      method: "GET",
-      headers: {
-        'authorization': Cookies.get("token")
-      }
-    });
-
-    const dataR = await response.json();
-    const data = await dataR.result;
+    const data = await getData("/animal/select-one/", id);
 
     const formatDate = (dateString) => {
       const date = new Date(dateString);
@@ -71,11 +62,7 @@ const PetDetail = () => {
     setVacCard(data.petVaccCard);
     setCastrated(data.petCharacteristics.petCastrated);
 
-    setImgOriginal(data.petPicture);
-
     document.title = data.petName
-
-    console.log(data);
     
   }
 
@@ -89,16 +76,10 @@ const PetDetail = () => {
     if(!petName || !birthDate || !entry || !gender || !animalType || !breed || !size || !comorbidities || !observations || !picture || !vacCard){
       toast.error("Preencha todos os campos!");
       return;
-  }
+    }
 
-    const update = await fetch(`http://localhost:8080/animal/update/${id}`, {
-      method: "PATCH",
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': Cookies.get("token")
-      },
-      body: JSON.stringify({
-        petName: petName,
+    const body = {
+      petName: petName,
         petBirth: birthDate,
         petEntry: entry,
         petGender: gender,
@@ -118,32 +99,22 @@ const PetDetail = () => {
           petOccurrencesQuantity: "",
           petLastOccurrence: ""
         }
-      })
-    });
-
-    if(update.ok){
-      toast.success(petName + " atualizado(a) com sucesso!");
-      
     }
+
+    updateData("/animal/update/", id, body, "Atualizado com sucesso!")
 
   }
 
 
   const handleDelete = async () => {
-    const del = await fetch(`http://localhost:8080/animal/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        'authorization': Cookies.get("token")
-      }
-    });
 
-    if(del.ok){
-      toast.success(petName + " deletado com sucesso, redirecionando...");
+    await deleteData("/animal/delete/", id, petName + " deletado com sucesso, redirecionando...");
+
       setTimeout(() => {
         navigate('/petList'); 
       }, 1000); 
     }
-  }
+  
 
 
   const handleRotate = async () => {

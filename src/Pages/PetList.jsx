@@ -90,7 +90,7 @@ const PetList = () => {
         }
       });
       const data = await response.json();
-      setPets(data);
+      //setPets(data);
     } catch (error) {
       console.error('Erro ao buscar pets:', error);
     } finally {
@@ -100,7 +100,7 @@ const PetList = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    searchPets(searchQuery, filterAge, filterType);
+    //searchPets(searchQuery, filterAge, filterType);
   };
 
   console.log(items)

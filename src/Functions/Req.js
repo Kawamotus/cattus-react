@@ -60,3 +60,35 @@ export const postDataFormData = async (path, formData, message) => {
     }
 
 }
+
+
+export const deleteData = async (path, id, message) => {
+    const response = await fetch(url + path + id, {
+        method: "DELETE",
+        headers: {
+        'authorization': Cookies.get("token")
+        }
+    });
+
+    if(response.ok){
+        toast.success(message);
+        
+    }
+
+}
+
+
+export const updateData = async (path, id, body, message) => {
+    const response = await fetch(url+path+id, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': Cookies.get("token")
+      },
+      body: JSON.stringify(body)
+    });
+
+    if(response.ok){
+        toast.success(message)
+    }
+}
