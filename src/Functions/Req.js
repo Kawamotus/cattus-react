@@ -1,15 +1,18 @@
+import toast from "react-hot-toast";
+import Cookies from "js-cookie";
+
 const url = "http://localhost:8080";
 
-export const getData = async (path, id, auth) => {
+export const getData = async (path, id) => {
     const response = await fetch(url + path + id , {
         method: "GET",
         headers: {
-            "authorization": auth
+            "authorization": Cookies.get("token")
         }
     });
 
     if(response.status === 500){
-        throw new Error("Sessao expirada, refaca o login para acessar!");
+        throw new Error("Sessão expirada, refaça o login para acessar!");
     }
 
     if (!response.ok) {
@@ -19,4 +22,41 @@ export const getData = async (path, id, auth) => {
     const data = await response.json();
     
     return data.result;
+}
+
+
+export const postDataJSON = async (path, body, message) => {
+    const response = await fetch(url+path, {
+        method: "POST",
+        headers: {
+            'authorization': Cookies.get("token"),
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(body)
+    });
+
+    const data = await response.json();
+
+    if(data.ok){
+        toast.success(message);
+    }
+
+}
+
+
+export const postDataFormData = async (path, formData, message) => {
+    const response = await fetch(url + path, {
+        method: "POST",
+        headers: {
+            'authorization': Cookies.get("token")
+        },
+        body: formData
+    });
+
+    const data = await response.json();
+
+    if(data.ok){
+        toast.success(message);
+    }
+
 }

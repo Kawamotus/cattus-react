@@ -86,7 +86,7 @@ const Home = () => {
         <Col sm={4} >
           <h2 className="text-center mt-5">Adicionados recentemente</h2>
           <div className="container mt-3">
-            {items.slice(0, 4).map(item => (
+            {items.slice(items.length -4, items.length).map(item => (
               <RecentEntry name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} key={item._id} />
             ))}
             

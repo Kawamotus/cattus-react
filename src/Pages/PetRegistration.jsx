@@ -4,6 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import { useParams } from 'react-router-dom';
 import TituloPagina from '../Components/TituloPagina';
+import { postDataFormData } from '../Functions/Req';
 
 const PetRegistration = () => {
 
@@ -73,23 +74,10 @@ const PetRegistration = () => {
         formData.append("petStatus.petOccurrencesQuantity", "");
         formData.append("petStatus.petLastOccurrence", "");
 
-        let response = await fetch("http://localhost:8080/animal/create", {
-            method: "POST",
-            headers: {
-                'authorization': Cookies.get("token")
-            },
-            body: formData
-        });
 
-        response = await response.json();
-
-        if(response.ok){
-            //e aqui finalizar ele
-            setLoading(false);
-            toast.success("Pet cadastrado com sucesso!");
-            clearFields();
-        }
-
+        await postDataFormData("/animal/create", formData, "Deu certinho")
+        setLoading(false);
+        clearFields();
 
     };
 
