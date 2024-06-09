@@ -51,12 +51,6 @@ const Login = () => {
             Cookies.set("company", userData.company);
             Cookies.set("picture", userData.picture);
 
-            console.log(userData)
-            console.log(Cookies.get("id"));
-            console.log(Cookies.get("name"));
-            console.log(Cookies.get("company"));
-            console.log(Cookies.get("picture"));
-            
             //aparentemnente ta funcionando
 
             navigate("/");

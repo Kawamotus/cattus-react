@@ -84,9 +84,9 @@ const Sidebar = () => {
           <NavLink to="/activity">
             <FontAwesomeIcon icon={faChartLine} />&nbsp; Atividades
           </NavLink>
-          <a onClick={() => toggleSubmenu('marcacoes')}>
+          {/* <a onClick={() => toggleSubmenu('marcacoes')}>
             <FontAwesomeIcon icon={faMarker} />&nbsp; Marcações <FontAwesomeIcon icon={faChevronDown} className="submenu-icon" />
-          </a>
+          </a> */}
           {activeMenu === 'marcacoes' && (
             <div className="submenu">
               <NavLink to="/markAnimal"><FontAwesomeIcon icon={faPaw} /> &nbsp;&nbsp;Animais</NavLink>

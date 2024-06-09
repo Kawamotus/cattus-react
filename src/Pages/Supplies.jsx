@@ -1,17 +1,19 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 import { getData } from '../Functions/Req';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import StockCard from '../Components/StockCard';
+import Loading from '../Components/Loading';
 
 
 const Supplies = () => {
   
-  const [teste, setTeste] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   const fetchData = async () => {
     setLoading(true);
-    setTeste(await getData ("/animal/select-all/", Cookies.get("company"), Cookies.get("token")));
+    setData(await getData ("/stock/select-all/", Cookies.get("company")));
     setLoading(false);
 
   }
@@ -19,23 +21,35 @@ const Supplies = () => {
   React.useEffect(() => {
     fetchData();
   }, [])
+
+  console.log(data)
   
-  console.log(teste)
 
   if(loading){
     return(
-    <Container>
-      <p>Ta carregando</p>
-    </Container>
+      <Loading />
     );
   }
 
   return (
     <Container>
-
-      <p>carregou bem carregadinho</p>
+      <Row className="my-4">
+        <Col>
+          <h1>Estoques!</h1>
+        </Col>
+      </Row>
+      <Row>
+        
+        {!loading && 
+        data.map(item => (
+          <Col key={item._id}>
+            <StockCard titulo={item.stockProduct} limite={item.stockCapacity} qtdAtual={item.stockAmount} gasto={item.stockSpendByDay}/>
+          </Col>
+        ))}
+        
+      </Row>
     </Container>
-  )
+  );
 }
 
 
