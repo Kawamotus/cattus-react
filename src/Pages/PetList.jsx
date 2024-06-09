@@ -103,7 +103,6 @@ const PetList = () => {
     //searchPets(searchQuery, filterAge, filterType);
   };
 
-  console.log(items)
 
   return (
     <Container>
@@ -140,69 +139,19 @@ const PetList = () => {
         </Col>
         
       </Row>
-       
-   
-      
-      {/* <Form className="mb-4">
-        <Row>
-          <Col md={4}>
-            <Form.Group controlId="filterAge">
-              <Form.Label>Gênero</Form.Label>
-              <Form.Control
-                as="select"
-                value={filterAge}
-                onChange={(e) => setFilterAge(e.target.value)}
-              >
-                <option value="">-- </option>
-                <option value="puppy">Filhote</option>
-                <option value="adult">Adulto</option>
-                <option value="senior">Sênior</option>
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group controlId="filterType">
-              <Form.Label>Tipo</Form.Label>
-              <Form.Control
-                as="select"
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value)}
-              >
-                <option value="">--</option>
-                <option value="dog">Cachorro</option>
-                <option value="cat">Gato</option>
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group controlId="filterCastrated">
-              <Form.Label>Castrado?</Form.Label>
-              <Form.Control
-                as="select"
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value)}
-              >
-                <option value="">--</option>
-                <option value="dog">Cachorro</option>
-                <option value="cat">Gato</option>
-              </Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-      </Form> */}
 
       <Row>
         {items.map((item, index) => {
           if (items.length === index + 1) {
             return (
               <Col key={item._id}  ref={lastItemRef}>
-                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id}/>
+                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id} border={item.petStatus.petCurrentStatus}/>
               </Col>
             );
           } else {
             return (
               <Col key={item._id}>
-                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id}/>
+                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id} />
               </Col>
             );
           }
