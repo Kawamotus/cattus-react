@@ -4,6 +4,7 @@ import { getData } from '../Functions/Req';
 import { Container, Row, Col } from 'react-bootstrap';
 import StockCard from '../Components/StockCard';
 import Loading from '../Components/Loading';
+import TituloPagina from '../Components/TituloPagina';
 
 
 const Supplies = () => {
@@ -35,14 +36,14 @@ const Supplies = () => {
     <Container>
       <Row className="my-4">
         <Col>
-          <h1>Estoques!</h1>
+          <TituloPagina titulo="Estoques" />
         </Col>
       </Row>
       <Row>
         
         {!loading && 
         data.map(item => (
-          <Col key={item._id}>
+          <Col key={item._id} sm={6}>
             <StockCard titulo={item.stockProduct} limite={item.stockCapacity} qtdAtual={item.stockAmount} gasto={item.stockSpendByDay}/>
           </Col>
         ))}

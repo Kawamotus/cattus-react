@@ -15,13 +15,12 @@ const Home = () => {
 
   const [items, setItems] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
-  const [notification, setNotification] = React.useState([])
+  const [error, setError] = React.useState(null); //ver isso
+  const [notification, setNotification] = React.useState([]); //ver isso
 
   async function fetchData(){
     setLoading(true);
-    
-
+  
     const response = await fetch(`http://localhost:8080/animal/select-all/${Cookies.get("company")}`, {
         method: "GET",
         headers: {
@@ -42,6 +41,7 @@ const Home = () => {
 
       setItems(data.result);
       setLoading(false);
+
   }
 
   React.useEffect(() => {
@@ -54,11 +54,15 @@ const Home = () => {
   const catActivitiesData = [16, 8];
 
   ///////////////////         DAR UM JEITO DE ARRUMAR O PETS EM ALERTA PARA ALERTAS!!!
+
+  const filteredItems = items.filter(item => item.petStatus.petCurrentStatus == 1 || item.petStatus.petCurrentStatus == 2);
+  console.log(filteredItems)
+
   return (
     
     <Container fluid="lg">
       <Toaster />
-      <TituloPagina titulo="Pets que precisam de sua atencao: " />
+        <TituloPagina titulo="Pets que precisam de sua atenção: " />   
       <br />
       <Row>
         {loading && 
@@ -67,11 +71,18 @@ const Home = () => {
           <span className="sr-only">Carregando...</span>
         </Spinner>
         </div>}          
-          {items.slice(4, 8).map(item => (
-            <Col key={item._id}>
-              <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id}/>
+          {!loading &&
+            filteredItems.length > 0 ? (
+              filteredItems.slice(0, 4).map(item => (
+              <Col key={item._id}>
+                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id} border={item.petStatus.petCurrentStatus == 1 ? "warning" : item.petStatus.petCurrentStatus == 2 ? "danger" : "success"}/>
+              </Col>
+              )
+          )): (
+            <Col style={{textAlign: "center"}}>
+              <p>Nenhum animal em perigo :D</p>
             </Col>
-          ))}
+            )}
       </Row>
       <br />
       <br />

@@ -21,6 +21,7 @@ const PetDetail = () => {
   const [comorbidities, setComorbidities] = React.useState("");
   const [observations, setObservations] = React.useState("");
   const [castrated, setCastrated] = React.useState("");
+  const [alertLevel, setAlertLevel] = React.useState("");
   const [picture, setPicture] = React.useState(null);
   const [vacCard, setVacCard] = React.useState(null);
 
@@ -37,6 +38,8 @@ const PetDetail = () => {
   const navigate = useNavigate();
 
   const fetchData = async () => {
+
+    setLoading(true);
 
     const data = await getData("/animal/select-one/", id);
 
@@ -61,8 +64,11 @@ const PetDetail = () => {
     setPicture(data.petPicture);
     setVacCard(data.petVaccCard);
     setCastrated(data.petCharacteristics.petCastrated);
+    setAlertLevel(data.petStatus.petCurrentStatus);
 
-    document.title = data.petName
+    document.title = data.petName;
+
+    setLoading(false);
     
   }
 
@@ -95,7 +101,7 @@ const PetDetail = () => {
         petPicture: picture,
         company: Cookies.get("company"),
         petStatus: {
-          petCurrentStatus: "",
+          petCurrentStatus: "0",
           petOccurrencesQuantity: "",
           petLastOccurrence: ""
         }
@@ -169,6 +175,17 @@ const PetDetail = () => {
   }
 
 
+  if(alertLevel == 0){
+    setAlertLevel("#22bb33");
+  }
+  else if(alertLevel == 1){
+    setAlertLevel("#f0ad4e");
+  }
+  else if(alertLevel == 2){
+    setAlertLevel("#bb2124")
+  }
+
+
   if(loading){ 
     return (
       <div className="text-center">
@@ -190,7 +207,7 @@ const PetDetail = () => {
         <Row>
 
           <Col sm={4}>
-            <Image src={picture} style={{objectFit: "cover", height: "450px", width: "450px", borderRadius: "10px", borderColor: "#ff0000"}} thumbnail  />
+            <Image src={picture} style={{objectFit: "cover", height: "450px", width: "450px", borderRadius: "10px", borderColor: alertLevel}} thumbnail  />
           </Col>
 
           <Col sm={4} style={{}}>
@@ -207,23 +224,19 @@ const PetDetail = () => {
                 />
                 
           </Form.Group>
-          <Button onClick={handleRotate} disabled={desativado} >Rotacionar</Button>
+          <Button onClick={handleRotate} disabled={desativado} variant="info" style={{marginTop: "10px"}}>Rotacionar</Button>
 
           <Form.Group controlId='alertLevel' style={{marginTop: "10px"}}>
-            {/* {deixar isso dinamico} */}
           <br />
             <div style={{display: "flex", width: "auto", height: "auto", backgroundColor: "", borderRadius: "20px", justifyContent: "space-between"}}> 
-            <p><b>Nível do alerta: </b></p>    
-                <div style={{ display: "flex", width: "290px", height: "25px", backgroundColor: "#ff0000", borderRadius: "20px", justifyContent: "center"}}> 
-                <p style={{color: "#fff"}}>ESTADO CRÍTICO</p>
+            <p><b>Estado do pet: </b></p>    
+                <div style={{ display: "flex", width: "290px", height: "25px", backgroundColor: alertLevel, borderRadius: "10px", justifyContent: "center"}}> 
+                <p style={{color: "#fff"}}>{alertLevel == "#22bb33" ? "Saudável" : alertLevel == "#f0ad4e" ? "Perigoso" : "Crítico"}</p>
                 </div>
 
                 
             </div>
           </Form.Group>
-         
-
-
 
           </Col>
 
@@ -372,7 +385,7 @@ const PetDetail = () => {
               />
               </Form.Group>
               <ButtonGroup>
-                <Button variant='warning' onClick={() => setDesativado(!desativado)} >{desativado ? "Habilitar" : "Desabilitar"} </Button>
+                <Button variant='warning' onClick={() => setDesativado(!desativado)} >{desativado ? "Ativar" : "Desativar"} </Button>
                 <Button type='submit' variant="success" style={{ marginLeft: "10px" }} disabled={desativado} >Atualizar </Button>
                 <Button variant="danger" style={{ marginLeft: "10px" }} disabled={desativado} onClick={handleShow}>Excluir </Button>
                 <Button variant='success' style={{marginLeft: "10px"}} onClick={handleReport} disabled={desativado}>Gerar relatorio</Button>
@@ -397,13 +410,13 @@ const PetDetail = () => {
           <Modal.Title>Excluir {petName}?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Confirme apenas se tiver certeza, essa acao nao podera ser desfeita!
+          Confirme apenas se tiver certeza, essa ação não poderá ser desfeita!
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={handleDelete}>Confirmar</Button>
+          <Button variant="info" onClick={handleDelete}>Confirmar</Button>
         </Modal.Footer>
       </Modal>
       

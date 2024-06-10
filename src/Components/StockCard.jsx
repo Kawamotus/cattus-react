@@ -19,6 +19,7 @@ export default function StockCard({titulo, limite, qtdAtual, gasto}) {
                 <ProgressBar striped now={progress} label={`${qtdAtual}`} variant={progress >= 65 ? 'success' : progress >= 30 ? 'warning' : 'danger' }/>
                 </Card.Body>
             </Card>
+            <br />
         </>
     )
 }

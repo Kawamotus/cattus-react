@@ -11,7 +11,7 @@ export default function ChartDoughnut({ data, titulo }) {
         datasets: [
           {
             label: 'Atividades dos Cães',
-            data: data, // Usando os dados passados via props
+            data: data, 
             backgroundColor: [
               'rgba(255, 30, 0, 0.5)',
               'rgba(255, 255, 86, 0.5)',

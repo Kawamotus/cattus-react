@@ -70,12 +70,12 @@ const PetRegistration = () => {
         formData.append("petVaccCard", imgData.vaccinationCard);
         formData.append("petPicture", imgData.petPhoto);
         formData.append("company", Cookies.get("company"));
-        formData.append("petStatus.petCurrentStatus", "");
+        formData.append("petStatus.petCurrentStatus", "0");
         formData.append("petStatus.petOccurrencesQuantity", "");
         formData.append("petStatus.petLastOccurrence", "");
 
 
-        await postDataFormData("/animal/create", formData, "Deu certinho")
+        await postDataFormData("/animal/create", formData, "Cadastrado com sucesso!")
         setLoading(false);
         clearFields();
 

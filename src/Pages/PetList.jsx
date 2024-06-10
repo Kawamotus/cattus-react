@@ -145,13 +145,13 @@ const PetList = () => {
           if (items.length === index + 1) {
             return (
               <Col key={item._id}  ref={lastItemRef}>
-                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id} border={item.petStatus.petCurrentStatus}/>
+                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id} border={item.petStatus.petCurrentStatus == 1 ? "warning" : item.petStatus.petCurrentStatus == 2 ? "danger" : "success"}/>
               </Col>
             );
           } else {
             return (
               <Col key={item._id}>
-                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id} />
+                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id} border={item.petStatus.petCurrentStatus == 1 ? "warning" : item.petStatus.petCurrentStatus == 2 ? "danger" : "success"} />
               </Col>
             );
           }
