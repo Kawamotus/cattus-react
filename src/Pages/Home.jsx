@@ -79,14 +79,7 @@ const Home = () => {
 		fetchData()
 	}, [])
 
-	///////////////////         DAR UM JEITO DE ARRUMAR O PETS EM ALERTA PARA ALERTAS!!!
-
-	const filteredItems = items.filter(
-		(item) =>
-			item.petStatus.petCurrentStatus == 1 ||
-			item.petStatus.petCurrentStatus == 2
-	)
-	// console.log(filteredItems)
+	const filteredItems = items.filter((item) => item.petStatus.petCurrentStatus == 1 || item.petStatus.petCurrentStatus == 2)
 
 	return (
 		<Container fluid="lg">
@@ -109,13 +102,7 @@ const Home = () => {
 								img={item.petPicture}
 								sexo={item.petGender == 'Fêmea' ? 'Fêmea' : 'Macho'}
 								id={item._id}
-								border={
-									item.petStatus.petCurrentStatus == 1
-										? 'warning'
-										: item.petStatus.petCurrentStatus == 2
-										? 'danger'
-										: 'success'
-								}
+								border={item.petStatus.petCurrentStatus == 1 ? 'warning' : item.petStatus.petCurrentStatus == 2 ? 'danger' : 'success'}
 							/>
 						</Col>
 					))
@@ -132,14 +119,14 @@ const Home = () => {
 					<ChartDoughnut
 						data={dogActivitiesData}
 						titulo="Média tempo de atividade (em minutos)  - Caes"
-					/>{' '}
+					/>
 					<br />
 				</Col>
 				<Col sm={4}>
 					<ChartDoughnut
 						data={catActivitiesData}
 						titulo="Média tempo de atividade (em minutos) - Gatos"
-					/>{' '}
+					/>
 					<br />
 				</Col>
 				<Col sm={4}>
