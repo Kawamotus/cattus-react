@@ -5,9 +5,6 @@ import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-import TituloPagina from '../Components/TituloPagina';
-
-
 
 const PetList = () => {
   document.title = "Lista de Pets";
@@ -16,7 +13,7 @@ const PetList = () => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [skip, setSkip] = React.useState(0);
-  const [limit, setLimit] = React.useState(4);
+  const limit = 4;
   const [hasMore, setHasMore] = React.useState(true);
 
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -35,7 +32,7 @@ const PetList = () => {
       });
 
       if(response.status === 500){
-        throw new Error("Sessao expirada, refaca o login para acessar!");
+        throw new Error("Erro interno, tente novamente mais tarde!");
 
       }
 
@@ -76,21 +73,26 @@ const PetList = () => {
     );
   }
 
-  const searchPets = async (query, age, type) => {
-    let searchUrl = `http://localhost:8080/pets/search?query=${query}`;
-    if (age) searchUrl += `&age=${age}`;
-    if (type) searchUrl += `&type=${type}`;
+  const searchPets = async () => {
+  
+    const searchUrl = `http://localhost:8080/animal/search/`;
 
-    setLoading(true);
     try {
       const response = await fetch(searchUrl, {
-        method: 'GET',
+        method: 'POST',
         headers: {
-          'authorization': Cookies.get("token")
-        }
+          'authorization': Cookies.get("token"),
+          'Content-Type': "application/json"
+        }, 
+        body: JSON.stringify({
+          query: searchQuery,
+          fields: ["petName"] //mudar isso aqq pra ficar dinâmico e pesquisar com filtro
+        })
       });
+
       const data = await response.json();
-      //setPets(data);
+      setItems(data)
+
     } catch (error) {
       console.error('Erro ao buscar pets:', error);
     } finally {
@@ -98,9 +100,16 @@ const PetList = () => {
     }
   };
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    //searchPets(searchQuery, filterAge, filterType);
+    setSearchQuery(e.target.value);
+    if(e.target.value === ""){
+      setItems(() => []);
+      setSkip(() => 0);
+      fetchData(0, limit);
+    }
+
+    searchPets();
   };
 
 

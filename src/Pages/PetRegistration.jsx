@@ -301,7 +301,10 @@ const PetRegistration = () => {
                 </Spinner>
                 </div>
             )}
-            <Toaster />
+            <Toaster 
+                position="top-right"
+                reverseOrder={false}
+            />
         </Form>
         <br /><br />
         </div>

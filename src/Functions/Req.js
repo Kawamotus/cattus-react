@@ -66,7 +66,7 @@ export const deleteData = async (path, id, message) => {
     const response = await fetch(url + path + id, {
         method: "DELETE",
         headers: {
-        'authorization': Cookies.get("token")
+            'authorization': Cookies.get("token")
         }
     });
 

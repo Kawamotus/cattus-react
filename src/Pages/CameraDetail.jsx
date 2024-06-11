@@ -99,7 +99,6 @@ const CameraDetail = () => {
 
         <TituloPagina titulo={cameraItems.cameraLocation} />
         <br /><br />
-        <p>{id}</p>
         <Row>
 
             <Col sm={8}>

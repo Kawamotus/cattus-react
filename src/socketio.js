@@ -16,7 +16,10 @@ const socket = new io(URL, {
 socket.off("notification")
 socket.on("notification", (info) =>{
     console.log(info);
-    toast.success("pinto");
+    toast.success(`${info.notificationOrigin.petBirth}`, {
+        position: 'top-right'
+    });
+    
 })
 
 export default socket
