@@ -73,9 +73,17 @@ const PetList = () => {
     );
   }
 
-  const searchPets = async () => {
-  
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    setSearchQuery(e.target.value);
+    if(e.target.value === ""){
+      setItems(null);
+      setSkip(() => 0);
+      fetchData(0, limit);
+    }
+
     const searchUrl = `http://localhost:8080/animal/search/`;
+    setLoading(true);
 
     try {
       const response = await fetch(searchUrl, {
@@ -86,11 +94,14 @@ const PetList = () => {
         }, 
         body: JSON.stringify({
           query: searchQuery,
-          fields: ["petName"] //mudar isso aqq pra ficar dinâmico e pesquisar com filtro
+          fields: valor
         })
       });
 
+      console.log(valor)
+
       const data = await response.json();
+      console.log(data)
       setItems(data)
 
     } catch (error) {
@@ -100,18 +111,7 @@ const PetList = () => {
     }
   };
 
-  const handleSearchSubmit = async (e) => {
-    e.preventDefault();
-    setSearchQuery(e.target.value);
-    if(e.target.value === ""){
-      setItems(() => []);
-      setSkip(() => 0);
-      fetchData(0, limit);
-    }
-
-    searchPets();
-  };
-
+  const valor = [["petCharacteristics", "petType"]]
 
   return (
     <Container>
@@ -127,9 +127,10 @@ const PetList = () => {
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
             >
-              <option value="">--</option>
-              <option value="dog">Cachorro</option>
-              <option value="cat">Gato</option>
+              <option value={["petName"]}>Nome do pet</option>
+              <option value={["petCharacteristics", "petType"]}>Tipo do pet</option>
+              <option value={["petCharacteristics", "petBreed"]}>Raça</option>
+              <option value={valor}>Castrado?</option>
             </Form.Control>
           </Form.Group>
         </Col>
@@ -141,16 +142,14 @@ const PetList = () => {
               value={searchQuery}
               onChange={handleSearchSubmit}
             />
-            <Button variant="outline-secondary">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </Button>
           </InputGroup>
         </Col>
         
       </Row>
 
       <Row>
-        {items.map((item, index) => {
+        {!loading &&
+        items.map((item, index) => {
           if (items.length === index + 1) {
             return (
               <Col key={item._id}  ref={lastItemRef}>
