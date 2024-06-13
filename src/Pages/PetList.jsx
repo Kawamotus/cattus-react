@@ -129,6 +129,10 @@ const PetList = () => {
     }
   }
 
+  console.log(items);
+  console.log("")
+  console.log(filterType)
+
   return (
     <Container>
       
