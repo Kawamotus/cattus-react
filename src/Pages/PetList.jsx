@@ -93,7 +93,7 @@ const PetList = () => {
         }, 
         body: JSON.stringify({
           query: searchQuery,
-          fields: [filterType]
+          fields: filterType
         })
       });
 
@@ -109,6 +109,28 @@ const PetList = () => {
     }
   };
 
+  const handleFilterChange = (e) => {
+    const value = e.target.value;
+    switch (value) {
+      case 'type':
+        setFilterType([["petCharacteristics", "petType"]]);
+        break;
+      case 'breed':
+        setFilterType([["petCharacteristics", "petBreed"]]);
+        break;
+      case 'castrated':
+        setFilterType([["petCharacteristics", "petCastrated"]]);
+        break;
+      case 'name':
+        setFilterType(["petName"]);
+        break;
+      default:
+        setFilterType([]);
+    }
+  }
+
+  console.log(filterType)
+
   return (
     <Container>
       
@@ -117,16 +139,15 @@ const PetList = () => {
           <h1 style={{marginTop: "10px"}} >Lista de Pets</h1>
         </Col>
         <Col md={4} style={{marginTop: "20px"}}>
-          <Form.Group controlId="filterType">
+          <Form.Group controlId="filtro">
             <Form.Control
-              as="select"
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
+              as="select" 
+              onChange={handleFilterChange}
             >
-              <option value={["petName"]}>Nome do pet</option>
-              <option value={[["petCharacteristics", "petType"]]}>Tipo do pet</option>
-              <option value={["petCharacteristics", "petBreed"]}>Raça</option>
-              <option value={["petCharacteristics", "petCastrated"]}>Castrado?</option>
+              <option value="name" >Nome do pet</option>
+              <option value="type">Tipo do pet</option>
+              <option value="breed" >Raça</option>
+              <option value="castrated">Castrado?</option>
             </Form.Control>
           </Form.Group>
         </Col>
