@@ -2,11 +2,10 @@ import React from 'react';
 import PetCard from '../Components/PetCard';
 import { Col, Container, Row, Spinner, Form, InputGroup } from 'react-bootstrap';
 import Cookies from 'js-cookie';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 
 const PetList = () => {
+  
   document.title = "Lista de Pets";
 
   const [items, setItems] = React.useState([]);
@@ -36,6 +35,7 @@ const PetList = () => {
       }
 
       if (!response.ok) {
+        console.log(response)
         throw new Error("Estamos enfrentando alguns problemas, tente novamente mais tarde");
       }
 
@@ -73,19 +73,20 @@ const PetList = () => {
   }
 
   const handleSearchSubmit = async (e) => {
+
     e.preventDefault();
     setSearchQuery(e.target.value);
+
     if(e.target.value === ""){
-      setItems(null);
+      setItems(() => []);
       setSkip(() => 0);
       fetchData(0, limit);
     }
 
-    const searchUrl = `http://localhost:8080/animal/search/`;
     setLoading(true);
 
     try {
-      const response = await fetch(searchUrl, {
+      const response = await fetch(`http://localhost:8080/animal/search/`, {
         method: 'POST',
         headers: {
           'authorization': Cookies.get("token"),
@@ -97,10 +98,9 @@ const PetList = () => {
         })
       });
 
-      console.log(filterType)
-
       const data = await response.json();
-      setItems(data)
+      
+      setItems(data);
 
     } catch (error) {
       console.error('Erro ao buscar pets:', error);
@@ -128,8 +128,6 @@ const PetList = () => {
         setFilterType([]);
     }
   }
-
-  console.log(filterType)
 
   return (
     <Container>

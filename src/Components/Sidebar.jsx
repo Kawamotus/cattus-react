@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-//import "../../public/style/style.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPaw, faPlus, faEye, faTriangleExclamation, faUserGroup, faVideo, faCubes, faChartLine, faMarker, faRightFromBracket, faBars, faTimes, faChevronDown, faGear } from '@fortawesome/free-solid-svg-icons';
 
