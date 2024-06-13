@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Button, Row, Col, Spinner } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
 import Cookies from 'js-cookie';
-import { useParams } from 'react-router-dom';
 import TituloPagina from '../Components/TituloPagina';
 import { postDataFormData } from '../Functions/Req';
 
@@ -74,7 +73,6 @@ const PetRegistration = () => {
         formData.append("petStatus.petOccurrencesQuantity", "");
         formData.append("petStatus.petLastOccurrence", "");
 
-
         await postDataFormData("/animal/create", formData, "Cadastrado com sucesso!")
         setLoading(false);
         clearFields();
@@ -97,7 +95,6 @@ const PetRegistration = () => {
     }
 
     
-    //////adicionar icones nos itens
     return (
         <div className="container">
         <TituloPagina titulo="Cadastro de Animais" />

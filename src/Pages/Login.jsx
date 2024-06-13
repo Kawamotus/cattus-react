@@ -32,7 +32,13 @@ const Login = () => {
             })
         });
 
+        
+
         response = await response.json();
+
+        if(!response.ok){
+            setErro(response.message)
+        }
 
         if(response.ok){ 
 
@@ -44,6 +50,8 @@ const Login = () => {
                     'authorization': Cookies.get("token")
                 }
             });
+
+            
 
             userData = await userData.json();
             Cookies.set("id", userData.id);

@@ -8,5 +8,8 @@ export function responseStatus(status) {
     if(status == 403){
         throw new Error("Seu nível de acesso não permite essa ação, contate o administrador de sua empresa.");
     }
+    if(status == 404){
+        throw new Error("Não encontrado");
+    }
 
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PetCard from '../Components/PetCard';
-import { Col, Container, Row, Spinner, Form, Button, InputGroup } from 'react-bootstrap';
+import { Col, Container, Row, Spinner, Form, InputGroup } from 'react-bootstrap';
 import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,7 @@ const PetList = () => {
   const [hasMore, setHasMore] = React.useState(true);
 
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [filterType, setFilterType] = React.useState('');
+  const [filterType, setFilterType] = React.useState([]);
 
   const observer = React.useRef();
 
@@ -33,7 +33,6 @@ const PetList = () => {
 
       if(response.status === 500){
         throw new Error("Erro interno, tente novamente mais tarde!");
-
       }
 
       if (!response.ok) {
@@ -94,14 +93,13 @@ const PetList = () => {
         }, 
         body: JSON.stringify({
           query: searchQuery,
-          fields: valor
+          fields: [filterType]
         })
       });
 
-      console.log(valor)
+      console.log(filterType)
 
       const data = await response.json();
-      console.log(data)
       setItems(data)
 
     } catch (error) {
@@ -110,8 +108,6 @@ const PetList = () => {
       setLoading(false);
     }
   };
-
-  const valor = [["petCharacteristics", "petType"]]
 
   return (
     <Container>
@@ -128,9 +124,9 @@ const PetList = () => {
               onChange={(e) => setFilterType(e.target.value)}
             >
               <option value={["petName"]}>Nome do pet</option>
-              <option value={["petCharacteristics", "petType"]}>Tipo do pet</option>
+              <option value={[["petCharacteristics", "petType"]]}>Tipo do pet</option>
               <option value={["petCharacteristics", "petBreed"]}>Raça</option>
-              <option value={valor}>Castrado?</option>
+              <option value={["petCharacteristics", "petCastrated"]}>Castrado?</option>
             </Form.Control>
           </Form.Group>
         </Col>

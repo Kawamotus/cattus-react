@@ -8,6 +8,7 @@ import PetCard from '../Components/PetCard'
 import RecentEntry from '../Components/RecentEntry'
 import TituloPagina from '../Components/TituloPagina'
 import ChartDoughnut from '../Components/Charts/ChartDoughnut'
+import ChartLine from '../Components/Charts/ChartLine'
 
 const Home = () => {
 	document.title = 'Cattus'
@@ -123,10 +124,11 @@ const Home = () => {
 					<br />
 				</Col>
 				<Col sm={4}>
-					<ChartDoughnut
+					<ChartLine />
+					{/* <ChartDoughnut
 						data={catActivitiesData}
 						titulo="Média tempo de atividade (em minutos) - Gatos"
-					/>
+					/> */}
 					<br />
 				</Col>
 				<Col sm={4}>
@@ -140,7 +142,7 @@ const Home = () => {
 								key={item._id}
 							/>
 						))}
-					</div>
+					</div> *
 				</Col>
 			</Row>
 		</Container>
