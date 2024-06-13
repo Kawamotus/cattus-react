@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 
 
 const PetList = () => {
-  
+
   document.title = "Lista de Pets";
 
   const [items, setItems] = React.useState([]);
@@ -16,7 +16,7 @@ const PetList = () => {
   const [hasMore, setHasMore] = React.useState(true);
 
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [filterType, setFilterType] = React.useState([]);
+  const [filterType, setFilterType] = React.useState(["petName"]);
 
   const observer = React.useRef();
 
@@ -78,7 +78,7 @@ const PetList = () => {
     setSearchQuery(e.target.value);
 
     if(e.target.value === ""){
-      setItems(() => []);
+      setItems(() => []);  
       setSkip(() => 0);
       fetchData(0, limit);
     }
@@ -163,7 +163,7 @@ const PetList = () => {
       </Row>
 
       <Row>
-        {!loading &&
+        {
         items.map((item, index) => {
           if (items.length === index + 1) {
             return (
