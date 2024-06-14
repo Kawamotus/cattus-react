@@ -8,14 +8,16 @@ import PetCard from '../Components/PetCard'
 import RecentEntry from '../Components/RecentEntry'
 import TituloPagina from '../Components/TituloPagina'
 import ChartDoughnut from '../Components/Charts/ChartDoughnut'
-import ChartLine from '../Components/Charts/ChartLine'
+import ChartBar from '../Components/Charts/ChartBar'
 
 const Home = () => {
 	document.title = 'Cattus'
 
 	const [items, setItems] = React.useState([])
-	const [dogActivitiesData, setChartsDog] = React.useState([])
-	const [catActivitiesData, setChartsCat] = React.useState([])
+	const [dogActivitiesData, setChartsDogActivities] = React.useState([])
+	const [catActivitiesData, setChartsCatActivities] = React.useState([])
+	const [dogSickData, setChartsDogSick] = React.useState([])
+	const [catSickData, setChartsCatSick] = React.useState([])
 	const [loading, setLoading] = React.useState(false)
 	const [error, setError] = React.useState(null) //ver isso
 	const [notification, setNotification] = React.useState([]) //ver isso
@@ -45,12 +47,13 @@ const Home = () => {
 
 		const data = await response.json()
 
-		fetchCharts()
+		fetchChartsActivities()
+		fetchChartsSick()
 		setItems(data.result)
 		setLoading(false)
 	}
 
-	async function fetchCharts() {
+	async function fetchChartsActivities() {
 		const response = await fetch(
 			`http://localhost:8080/activity/charts/average-animal-activity/all`,
 			{
@@ -72,8 +75,34 @@ const Home = () => {
 		}
 
 		const data = await response.json()
-		setChartsDog(data.result['cachorros'])
-		setChartsCat(data.result['gatos'])
+		setChartsDogActivities(data.result['cachorros'])
+		setChartsCatActivities(data.result['gatos'])
+	}
+
+	async function fetchChartsSick() {
+		const response = await fetch(
+			`http://localhost:8080/animal/charts/sick-animals`,
+			{
+				method: 'GET',
+				headers: {
+					authorization: Cookies.get('token'),
+				},
+			}
+		)
+
+		if (response.status === 401) {
+			throw new Error('Sessao expirada, refaca o login para acessar!')
+		}
+
+		if (!response.ok) {
+			throw new Error(
+				'Estamos enfrentando alguns problemas, tente novamente mais tarde'
+			)
+		}
+
+		const data = await response.json()
+		setChartsCatSick(data.result['cachorros'])
+		setChartsDogSick(data.result['gatos'])
 	}
 
 	React.useEffect(() => {
@@ -124,7 +153,10 @@ const Home = () => {
 					<br />
 				</Col>
 				<Col sm={4}>
-					<ChartLine />
+					<ChartBar 
+						data={dogActivitiesData}
+						titulo={"Média tempo de atividade (em minutos)  - Caes"}
+					/>
 					{/* <ChartDoughnut
 						data={catActivitiesData}
 						titulo="Média tempo de atividade (em minutos) - Gatos"
