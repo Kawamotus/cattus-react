@@ -8,6 +8,7 @@ import PetCard from '../Components/PetCard'
 import RecentEntry from '../Components/RecentEntry'
 import TituloPagina from '../Components/TituloPagina'
 import ChartDoughnut from '../Components/Charts/ChartDoughnut'
+import ChartDoughnutTotalAnimals from '../Components/Charts/ChartDoughnutTotalAnimals'
 import ChartBar from '../Components/Charts/ChartBar'
 
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
 	const [catActivitiesData, setChartsCatActivities] = React.useState([])
 	const [dogSickData, setChartsDogSick] = React.useState([])
 	const [catSickData, setChartsCatSick] = React.useState([])
+	const [totalAnimalsData, setChartsTotalAnimals] = React.useState([])
 	const [loading, setLoading] = React.useState(false)
 	const [error, setError] = React.useState(null) //ver isso
 	const [notification, setNotification] = React.useState([]) //ver isso
@@ -49,6 +51,7 @@ const Home = () => {
 
 		fetchChartsActivities()
 		fetchChartsSick()
+		fetchChartsTotal()
 		setItems(data.result)
 		setLoading(false)
 	}
@@ -105,11 +108,40 @@ const Home = () => {
 		setChartsDogSick(data.result['gatos'])
 	}
 
+	async function fetchChartsTotal() {
+		const response = await fetch(
+			`http://localhost:8080/animal/charts/total-animals`,
+			{
+				method: 'GET',
+				headers: {
+					authorization: Cookies.get('token'),
+				},
+			}
+		)
+
+		if (response.status === 401) {
+			throw new Error('Sessao expirada, refaca o login para acessar!')
+		}
+
+		if (!response.ok) {
+			throw new Error(
+				'Estamos enfrentando alguns problemas, tente novamente mais tarde'
+			)
+		}
+
+		const data = await response.json()
+		setChartsTotalAnimals(data.result)
+	}
+
 	React.useEffect(() => {
 		fetchData()
 	}, [])
 
-	const filteredItems = items.filter((item) => item.petStatus.petCurrentStatus == 1 || item.petStatus.petCurrentStatus == 2)
+	const filteredItems = items.filter(
+		(item) =>
+			item.petStatus.petCurrentStatus == 1 ||
+			item.petStatus.petCurrentStatus == 2
+	)
 
 	return (
 		<Container fluid="lg">
@@ -132,7 +164,13 @@ const Home = () => {
 								img={item.petPicture}
 								sexo={item.petGender == 'Fêmea' ? 'Fêmea' : 'Macho'}
 								id={item._id}
-								border={item.petStatus.petCurrentStatus == 1 ? 'warning' : item.petStatus.petCurrentStatus == 2 ? 'danger' : 'success'}
+								border={
+									item.petStatus.petCurrentStatus == 1
+										? 'warning'
+										: item.petStatus.petCurrentStatus == 2
+										? 'danger'
+										: 'success'
+								}
 							/>
 						</Col>
 					))
@@ -146,22 +184,18 @@ const Home = () => {
 			<br />
 			<Row>
 				<Col sm={4}>
-					<ChartDoughnut
+					<ChartBar
 						data={dogActivitiesData}
-						titulo="Média tempo de atividade (em minutos)  - Caes"
+						titulo={'Média tempo de atividade (em minutos)  - Caes'}
 					/>
-					<br />
+					<ChartDoughnut data={dogSickData} titulo={'Alertas - Cachorros'} />
 				</Col>
 				<Col sm={4}>
-					<ChartBar 
-						data={dogActivitiesData}
-						titulo={"Média tempo de atividade (em minutos)  - Caes"}
-					/>
-					{/* <ChartDoughnut
+					<ChartBar
 						data={catActivitiesData}
-						titulo="Média tempo de atividade (em minutos) - Gatos"
-					/> */}
-					<br />
+						titulo={'Média tempo de atividade (em minutos)  - Gatos'}
+					/>
+					<ChartDoughnut data={catSickData} titulo={'Alertas - Gatos'} />
 				</Col>
 				<Col sm={4}>
 					<h2 className="text-center mt-5">Adicionados recentemente</h2>
@@ -174,7 +208,20 @@ const Home = () => {
 								key={item._id}
 							/>
 						))}
-					</div> *
+					</div>
+                </Col>                
+				<Col sm={4}>
+					{totalAnimalsData.cachorro || totalAnimalsData.gatos ? (
+						<ChartDoughnutTotalAnimals
+							data={totalAnimalsData}
+							titulo={'Quantidade total de animais'}
+						/>
+					) : (
+						<Col style={{ textAlign: 'center' }}>
+							<h2 className="text-center">Quantidade total de animais</h2>
+							<p>Nenhum animal registrado :D</p>
+						</Col>
+					)}
 				</Col>
 			</Row>
 		</Container>

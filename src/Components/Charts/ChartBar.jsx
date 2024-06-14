@@ -34,7 +34,6 @@ export default function ChartBar({data, titulo}) {
         };
         sets.push(set);
     });
-    console.log(sets);
     const chartData = {
         labels: ["atividade"],
         datasets: sets,
