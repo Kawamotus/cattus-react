@@ -76,13 +76,6 @@ const PetList = () => {
 
     e.preventDefault();
     setSearchQuery(e.target.value);
-
-    if(e.target.value === ""){
-      setItems(() => []);  
-      setSkip(() => 0);
-      fetchData(0, limit);
-    }
-
     setLoading(true);
 
     try {
@@ -107,6 +100,12 @@ const PetList = () => {
     } finally {
       setLoading(false);
     }
+
+    if(e.target.value === ""){
+      setItems(() => []);  
+      setSkip(() => 0);
+      fetchData(skip, limit);
+    }
   };
 
   const handleFilterChange = (e) => {
@@ -128,10 +127,6 @@ const PetList = () => {
         setFilterType([]);
     }
   }
-
-  console.log(items);
-  console.log("")
-  console.log(filterType)
 
   return (
     <Container>

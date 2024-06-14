@@ -24,6 +24,7 @@ const PetDetail = () => {
   const [alertLevel, setAlertLevel] = React.useState("");
   const [picture, setPicture] = React.useState(null);
   const [vacCard, setVacCard] = React.useState(null);
+  const [currentStatus, setCurrentStatus] = React.useState("");
 
   const [angle, setAngle] = React.useState(0);
   const [desativado, setDesativado] = React.useState(true);
@@ -51,7 +52,6 @@ const PetDetail = () => {
       return `${year}-${month}-${day}`;
     }
 
-
     setPetName(data.petName);
     setBirthDate(formatDate(data.petBirth));
     setEntry(formatDate(data.petEntry));
@@ -63,6 +63,7 @@ const PetDetail = () => {
     setObservations(data.petObs);
     setPicture(data.petPicture);
     setVacCard(data.petVaccCard);
+    setCurrentStatus(data.petStatus.petCurrentStatus);
     setCastrated(data.petCharacteristics.petCastrated);
     setAlertLevel(data.petStatus.petCurrentStatus);
 
@@ -101,7 +102,7 @@ const PetDetail = () => {
         petPicture: picture,
         company: Cookies.get("company"),
         petStatus: {
-          petCurrentStatus: "0",
+          petCurrentStatus: currentStatus,
           petOccurrencesQuantity: "",
           petLastOccurrence: ""
         }
@@ -119,10 +120,9 @@ const PetDetail = () => {
       setTimeout(() => {
         navigate('/petList'); 
       }, 1000); 
-    }
+  }
+
   
-
-
   const handleRotate = async () => {
 
     setLoading(true);
@@ -349,14 +349,10 @@ const PetDetail = () => {
                     disabled={desativado}
                 />
             </Form.Group>
-
-
           </Col>
-          
-          
+
           <Col>
           <br />
-
           <Form.Group controlId="formCastrated" style={{marginBottom: "20px"}}>
                 <Form.Label>Castrado?</Form.Label>
                 <Form.Control
