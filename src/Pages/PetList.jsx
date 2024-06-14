@@ -20,7 +20,7 @@ const PetList = () => {
 
   const observer = React.useRef();
 
-  const fetchData = async (skip, limit) => {
+  const fetchData = async () => {
     setLoading(true);
     try {
       const response = await fetch(`http://localhost:8080/animal/select-all/${Cookies.get("company")}?skip=${skip}&limit=${limit}`, {
@@ -50,8 +50,8 @@ const PetList = () => {
   };
 
   React.useEffect(() => {
-    fetchData(skip, limit);
-  }, [skip, limit]);
+    fetchData();
+  }, [skip]);
 
   const lastItemRef = React.useCallback((node) => {
     if (loading) return;
@@ -62,7 +62,7 @@ const PetList = () => {
       }
     });
     if (node) observer.current.observe(node);
-  }, [loading, hasMore, limit]);
+  }, [loading, hasMore]);
 
   if (error) {
     return (
@@ -72,6 +72,7 @@ const PetList = () => {
     );
   }
 
+  
   const handleSearchSubmit = async (e) => {
 
     e.preventDefault();
@@ -102,11 +103,12 @@ const PetList = () => {
     }
 
     if(e.target.value === ""){
-      setItems(() => []);  
-      setSkip(() => 0);
-      fetchData(skip, limit);
+      setItems([]);  
+      setSkip(0);
+      await fetchData();
     }
   };
+
 
   const handleFilterChange = (e) => {
     const value = e.target.value;

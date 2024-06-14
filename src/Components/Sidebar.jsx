@@ -80,7 +80,7 @@ const Sidebar = () => {
           <NavLink to="/supplies">
             <FontAwesomeIcon icon={faCubes} />&nbsp; Mantimentos
           </NavLink>
-          <NavLink to="/activity">
+          <NavLink to="/activities">
             <FontAwesomeIcon icon={faChartLine} />&nbsp; Atividades
           </NavLink>
           {/* <a onClick={() => toggleSubmenu('marcacoes')}>

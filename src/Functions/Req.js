@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
-const url = "http://localhost:8080";
+export const url = "http://localhost:8080";
 
 export const getData = async (path, id) => {
     const response = await fetch(url + path + id , {
@@ -12,7 +12,7 @@ export const getData = async (path, id) => {
     });
 
     if(response.status === 500){
-        throw new Error("Sessão expirada, refaça o login para acessar!");
+        throw new Error("Erro interno, tente novamente mais tarde");
     }
 
     if (!response.ok) {

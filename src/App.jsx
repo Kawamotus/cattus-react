@@ -14,6 +14,7 @@ import PetDetail from './Pages/PetDetail';
 import CameraDetail from './Pages/CameraDetail';
 import Error404 from './Pages/Error404';
 import Supplies from './Pages/Supplies';
+import Activities from './Pages/Activities';
 
 
 const App = () => {
@@ -39,6 +40,7 @@ const App = () => {
           <Route path='petDetail/:id' element={<PetDetail />} />
           <Route path='cameraDetail/:id' element={<CameraDetail />} />
           <Route path='supplies' element={<Supplies />} />
+          <Route path='activities' element={<Activities />} />
           <Route path='*' element={<Error404 />} />
         </Routes>
     </BrowserRouter>

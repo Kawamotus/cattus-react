@@ -80,6 +80,8 @@ const Home = () => {
 		const data = await response.json()
 		setChartsDogActivities(data.result['cachorros'])
 		setChartsCatActivities(data.result['gatos'])
+
+		console.log(data.result)
 	}
 
 	async function fetchChartsSick() {
