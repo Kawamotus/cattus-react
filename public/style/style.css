@@ -277,3 +277,25 @@ input {
     max-width: 35rem;
     background-color: #ffffff;
   }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    margin: 5px 0;
+    transition: 0.3s;
+  }
+  
+  .menu-item:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .menu-item .fa-icon {
+    margin-right: 10px;
+  }
+  
+  
