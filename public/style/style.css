@@ -299,3 +299,62 @@ input {
   }
   
   
+
+
+
+ 
+::-webkit-scrollbar {
+    width: 12px; 
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px; 
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #a00000; 
+    border-radius: 10px; 
+    border: 3px solid #f1f1f1; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a00000; 
+  }
+  
+  
+  html {
+    scrollbar-width: thin; 
+    scrollbar-color: #a00000 #f1f1f1; 
+  }
+  
+
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: #a00000 #f1f1f1;
+  }
+  
+
+  .sidenav {
+    scrollbar-width: thin;
+    scrollbar-color: #a00000 #f1f1f1;
+  }
+  
+  .sidenav::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .sidenav::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .sidenav::-webkit-scrollbar-thumb {
+    background-color: #a00000;
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+  }
+  
+  .sidenav::-webkit-scrollbar-thumb:hover {
+    background: #a00000;
+  }

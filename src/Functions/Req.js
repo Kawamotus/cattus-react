@@ -93,6 +93,7 @@ export const updateData = async (path, id, body, message) => {
     }
 }
 
+
 export const uploadImg = async (body) => {
     const response = await fetch(url + "/upload-image", {
         method: "POST",
@@ -100,5 +101,9 @@ export const uploadImg = async (body) => {
             'authorization': Cookies.get("token")
         }, 
         body: body
-    })
+    });
+
+    const data = await response.json();
+
+    return data;
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
 import Cookies from 'js-cookie';
+import TituloPagina from '../Components/TituloPagina';
 
 const EmployeeRegister = () => {
 
@@ -55,10 +56,8 @@ const EmployeeRegister = () => {
     }
 
     return (
-        <Container m="auto">
-            <h3>
-                Cadastro de Colaboradores
-            </h3>
+        <Container>
+            <TituloPagina titulo="Cadastro de funcionário" />
             <br />
             <Form onSubmit={handleSubmit}>
                 <Row>
@@ -106,7 +105,7 @@ const EmployeeRegister = () => {
                     </Col>
                     
                     <Col>
-                        <Form.Group controlId="forPassword">
+                        <Form.Group controlId="forPassword" style={{marginBottom: "20px"}}>
                                 <Form.Label>E-mail</Form.Label>
                                 <Form.Control 
                                     type="password" 
@@ -120,7 +119,7 @@ const EmployeeRegister = () => {
                 <Row>
                     <Col>
                     <Form.Group controlId="formPic">
-                        <Form.Label>Foto do Pet</Form.Label>
+                        <Form.Label>Foto do Funcionário</Form.Label>
                             <Form.Control 
                                 type="file" 
                                 accept="image/*"

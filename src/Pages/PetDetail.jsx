@@ -3,7 +3,7 @@ import { Container, Form, Button, Spinner, Image, Row, Col, Modal, ButtonGroup }
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import toast, { Toaster } from 'react-hot-toast';
-import { getData, updateData, deleteData } from '../Functions/Req';
+import { getData, updateData, deleteData, uploadImg } from '../Functions/Req';
 
 
 import TituloPagina from '../Components/TituloPagina';
@@ -25,6 +25,7 @@ const PetDetail = () => {
   const [picture, setPicture] = React.useState(null);
   const [vacCard, setVacCard] = React.useState(null);
   const [currentStatus, setCurrentStatus] = React.useState("");
+  const [newPicture, setNewPicture] = React.useState(null)
 
   const [angle, setAngle] = React.useState(0);
   const [desativado, setDesativado] = React.useState(true);
@@ -32,6 +33,7 @@ const PetDetail = () => {
   const [loading, setLoading] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const [mensagem, setMensagem] = React.useState("")
+  const [message, setMessage] = React.useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -174,6 +176,15 @@ const PetDetail = () => {
     setMensagem("");
   }
 
+  const handleUpload = async () => {
+    setMessage("Enviando imagem, aguarde...")
+    const formData = new FormData();
+    formData.append("imagem", newPicture)
+    const retorno = await uploadImg(formData)
+    setPicture(() => retorno.img_url)
+    setMessage("");
+}
+
 
   if(alertLevel == 0){
     setAlertLevel("#22bb33");
@@ -226,16 +237,38 @@ const PetDetail = () => {
           </Form.Group>
           <Button onClick={handleRotate} disabled={desativado} variant="info" style={{marginTop: "10px"}}>Rotacionar</Button>
 
-          <Form.Group controlId='alertLevel' style={{marginTop: "10px"}}>
+          <Form.Group controlId='alertLevel' style={{marginTop: "15px", marginBottom: "20px"}}>
           <br />
             <div style={{display: "flex", width: "auto", height: "auto", backgroundColor: "", borderRadius: "20px", justifyContent: "space-between"}}> 
             <p><b>Estado do pet: </b></p>    
                 <div style={{ display: "flex", width: "290px", height: "25px", backgroundColor: alertLevel, borderRadius: "10px", justifyContent: "center"}}> 
                 <p style={{color: "#fff"}}>{alertLevel == "#22bb33" ? "Saudável" : alertLevel == "#f0ad4e" ? "Perigoso" : "Crítico"}</p>
                 </div>
-
-                
             </div>
+          </Form.Group>
+
+          <Form.Group controlId="formPic" style={{marginBottom: "20px"}}>
+              <Form.Label>Atualizar foto</Form.Label>
+                  <Form.Control 
+                      type="file" 
+                      accept="image/*"
+                      onChange={(e) => setNewPicture(e.target.files[0])} 
+                      disabled={desativado}
+                  />
+                  {newPicture && (
+                      <div className="mt-3" style={{textAlign: "center"}}>
+                      <img
+                          src={URL.createObjectURL(newPicture)}
+                          alt="Foto do Funcionário"
+                          className="img-thumbnail"
+                          style={{ maxWidth: '200px' }}
+                      /><br />
+                      <Button variant='info' style={{marginRight: "10px"}} onClick={handleUpload}>Confirmar</Button>
+                      <Button variant='danger' onClick={() => setNewPicture(null)}>Cancelar</Button>
+                      <br />
+                      <p>{message}</p>
+                      </div>
+                  )}
           </Form.Group>
 
           </Col>

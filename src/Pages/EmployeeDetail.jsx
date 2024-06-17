@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Container, Row, Image, Form, ButtonGroup, Button } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
 
-import { getData, updateData } from '../Functions/Req';
+import { getData, updateData, uploadImg } from '../Functions/Req';
 import { useParams } from 'react-router-dom';
 import TituloPagina from '../Components/TituloPagina';
 import Loading from '../Components/Loading';
@@ -19,6 +19,9 @@ const EmployeeDetail = () => {
     const [email, setEmail] = React.useState("");
     const [name, setName] = React.useState("");
     const [picture, setPicture] = React.useState("");
+    const [newPicture, setNewPicture] = React.useState(null);
+    const [message, setMessage] = React.useState("")
+
     // const [password, setPassword] = React.useState("");
     
     const getEmployeeData = async () => {
@@ -52,8 +55,15 @@ const EmployeeDetail = () => {
         }
 
         updateData("/employee/update/", id, body, "Atualizado com sucesso!");
+    }
 
-
+    const handleUpload = async () => {
+        setMessage("Enviando imagem, aguarde...")
+        const formData = new FormData();
+        formData.append("imagem", newPicture)
+        const retorno = await uploadImg(formData)
+        setPicture(() => retorno.img_url)
+        setMessage("");
     }
 
     React.useEffect(() => {
@@ -129,6 +139,30 @@ const EmployeeDetail = () => {
                                     required
                                 />
                         </Form.Group> */}
+
+                        <Form.Group controlId="formPic" style={{marginBottom: "20px"}}>
+                            <Form.Label>Atualizar foto</Form.Label>
+                                <Form.Control 
+                                    type="file" 
+                                    accept="image/*"
+                                    onChange={(e) => setNewPicture(e.target.files[0])} 
+                                    disabled={desativado}
+                                />
+                                {newPicture && (
+                                    <div className="mt-3" style={{textAlign: "center"}}>
+                                    <img
+                                        src={URL.createObjectURL(newPicture)}
+                                        alt="Foto do Funcionário"
+                                        className="img-thumbnail"
+                                        style={{ maxWidth: '500px' }}
+                                    /><br />
+                                    <Button variant='info' style={{marginRight: "10px"}} onClick={handleUpload}>Confirmar</Button>
+                                    <Button variant='danger' onClick={() => setNewPicture(null)}>Cancelar</Button>
+                                    <br />
+                                    <p>{message}</p>
+                                    </div>
+                                )}
+                        </Form.Group>
 
                         <ButtonGroup>
                             <Button variant='warning' onClick={() => setDesativado(!desativado)} >{desativado ? "Ativar" : "Desativar"}</Button>
