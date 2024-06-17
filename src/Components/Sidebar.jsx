@@ -74,9 +74,12 @@ const Sidebar = () => {
               <NavLink to="/petAlert" className="menu-item"><FontAwesomeIcon  icon={faTriangleExclamation} className="fa-icon" />Alerta</NavLink>
             </div>
           )}
-          <NavLink to="/employees" className="menu-item">
-            <FontAwesomeIcon  icon={faUserGroup} className="fa-icon" /> Funcionários
-          </NavLink>
+          {Cookies.get("accessLevel") == 1 && (
+            <NavLink to="/employees" className="menu-item">
+              <FontAwesomeIcon  icon={faUserGroup} className="fa-icon" /> Funcionários
+            </NavLink>
+          )}
+          
           <NavLink to="/camera" className="menu-item">
             <FontAwesomeIcon  icon={faVideo} className="fa-icon" /> Câmeras
           </NavLink>

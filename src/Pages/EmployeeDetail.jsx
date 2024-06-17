@@ -1,11 +1,13 @@
 import React from 'react';
 import { Col, Container, Row, Image, Form, ButtonGroup, Button } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 import { getData, updateData, uploadImg } from '../Functions/Req';
 import { useParams } from 'react-router-dom';
 import TituloPagina from '../Components/TituloPagina';
 import Loading from '../Components/Loading';
+import Error404 from './Error404';
 
 const EmployeeDetail = () => {
 
@@ -74,114 +76,122 @@ const EmployeeDetail = () => {
         setDataFields();
     }, [employeeData]);
 
-    return (
-        <Container>
-            <Row>
+
+    if(Cookies.get("accessLevel") == 1){
+        return (
+            <Container>
+                <Row>
+                    {!loading && (
+                        <TituloPagina titulo={name} />
+                    )}
+                </Row>
                 {!loading && (
-                    <TituloPagina titulo={name} />
+                <Row style={{marginTop: "50px", marginBottom: "50px"}}>
+                    
+                    <Col sm={5}>
+                        <Image src={picture} style={{objectFit: "cover", height: "500px", width: "500px", borderRadius: "10px", borderColor: ""}} thumbnail  />
+                    </Col>
+                    <Col sm={7}>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group controlId="formName" style={{marginBottom: "20px"}}>
+                                <Form.Label>Nome</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="ex: João da Silva"
+                                        name="name"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        disabled={desativado}
+                                        required
+                                    />
+                            </Form.Group>
+                            <Form.Group controlId="formEmail" style={{marginBottom: "20px"}}>
+                                <Form.Label>E-mail</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="email@exemplo.com"
+                                        name="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        disabled={desativado}
+                                        required
+                                    />
+                            </Form.Group>
+                            <Form.Group controlId="formAccessLevel" style={{marginBottom: "20px"}}>
+                                <Form.Label>Nível de acesso</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    name="gender"
+                                    value={accessLevel}
+                                    onChange={(e) => setAcessLevel(e.target.value)}
+                                    disabled={desativado}
+                                    required
+                                >
+                                    <option value="0">0 - Usuário comum</option>
+                                    <option value="1">1 - Administrador</option>
+                                </Form.Control>
+                            </Form.Group>
+                            {/* <Form.Group controlId="formPassword" style={{marginBottom: "20px"}}>
+                                <Form.Label>Senha</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="email@exemplo.com"
+                                        name="email"
+                                        value={password}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        disabled={desativado}
+                                        required
+                                    />
+                            </Form.Group> */}
+
+                            <Form.Group controlId="formPic" style={{marginBottom: "20px"}}>
+                                <Form.Label>Atualizar foto</Form.Label>
+                                    <Form.Control 
+                                        type="file" 
+                                        accept="image/*"
+                                        onChange={(e) => setNewPicture(e.target.files[0])} 
+                                        disabled={desativado}
+                                    />
+                                    {newPicture && (
+                                        <div className="mt-3" style={{textAlign: "center"}}>
+                                        <img
+                                            src={URL.createObjectURL(newPicture)}
+                                            alt="Foto do Funcionário"
+                                            className="img-thumbnail"
+                                            style={{ maxWidth: '500px' }}
+                                        /><br />
+                                        <Button variant='info' style={{marginRight: "10px"}} onClick={handleUpload}>Confirmar</Button>
+                                        <Button variant='danger' onClick={() => setNewPicture(null)}>Cancelar</Button>
+                                        <br />
+                                        <p>{message}</p>
+                                        </div>
+                                    )}
+                            </Form.Group>
+
+                            <ButtonGroup>
+                                <Button variant='warning' onClick={() => setDesativado(!desativado)} >{desativado ? "Ativar" : "Desativar"}</Button>
+                                <Button variant='success' type='submit'>Atualizar</Button>
+                                <Button variant='danger'>Excluir</Button>
+                            </ButtonGroup>
+                        </Form>
+                    </Col>
+                </Row>
                 )}
-            </Row>
-            {!loading && (
-            <Row style={{marginTop: "50px", marginBottom: "50px"}}>
-                
-                <Col sm={5}>
-                    <Image src={picture} style={{objectFit: "cover", height: "500px", width: "500px", borderRadius: "10px", borderColor: ""}} thumbnail  />
-                </Col>
-                <Col sm={7}>
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="formName" style={{marginBottom: "20px"}}>
-                            <Form.Label>Nome</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="ex: João da Silva"
-                                    name="name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    disabled={desativado}
-                                    required
-                                />
-                        </Form.Group>
-                        <Form.Group controlId="formEmail" style={{marginBottom: "20px"}}>
-                            <Form.Label>E-mail</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="email@exemplo.com"
-                                    name="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    disabled={desativado}
-                                    required
-                                />
-                        </Form.Group>
-                        <Form.Group controlId="formAccessLevel" style={{marginBottom: "20px"}}>
-                            <Form.Label>Nível de acesso</Form.Label>
-                            <Form.Control
-                                as="select"
-                                name="gender"
-                                value={accessLevel}
-                                onChange={(e) => setAcessLevel(e.target.value)}
-                                disabled={desativado}
-                                required
-                            >
-                                <option value="0">0 - Usuário comum</option>
-                                <option value="1">1 - Administrador</option>
-                            </Form.Control>
-                        </Form.Group>
-                        {/* <Form.Group controlId="formPassword" style={{marginBottom: "20px"}}>
-                            <Form.Label>Senha</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="email@exemplo.com"
-                                    name="email"
-                                    value={password}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    disabled={desativado}
-                                    required
-                                />
-                        </Form.Group> */}
+                {loading && (
+                <Row style={{marginTop: "50px", marginBottom: "50px"}}>
+                    <Loading />
+                </Row>
+                )}
+                <Toaster />
 
-                        <Form.Group controlId="formPic" style={{marginBottom: "20px"}}>
-                            <Form.Label>Atualizar foto</Form.Label>
-                                <Form.Control 
-                                    type="file" 
-                                    accept="image/*"
-                                    onChange={(e) => setNewPicture(e.target.files[0])} 
-                                    disabled={desativado}
-                                />
-                                {newPicture && (
-                                    <div className="mt-3" style={{textAlign: "center"}}>
-                                    <img
-                                        src={URL.createObjectURL(newPicture)}
-                                        alt="Foto do Funcionário"
-                                        className="img-thumbnail"
-                                        style={{ maxWidth: '500px' }}
-                                    /><br />
-                                    <Button variant='info' style={{marginRight: "10px"}} onClick={handleUpload}>Confirmar</Button>
-                                    <Button variant='danger' onClick={() => setNewPicture(null)}>Cancelar</Button>
-                                    <br />
-                                    <p>{message}</p>
-                                    </div>
-                                )}
-                        </Form.Group>
-
-                        <ButtonGroup>
-                            <Button variant='warning' onClick={() => setDesativado(!desativado)} >{desativado ? "Ativar" : "Desativar"}</Button>
-                            <Button variant='success' type='submit'>Atualizar</Button>
-                            <Button variant='danger'>Excluir</Button>
-                        </ButtonGroup>
-                    </Form>
-                </Col>
-            </Row>
-            )}
-            {loading && (
-            <Row style={{marginTop: "50px", marginBottom: "50px"}}>
-                <Loading />
-            </Row>
-            )}
-            <Toaster />
-
-        </Container>
-    )
+            </Container>
+        )
+    }
+    else{
+        return(
+            <Error404 />
+        )
+    }
 }
 
 export default EmployeeDetail
