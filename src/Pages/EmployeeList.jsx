@@ -76,13 +76,13 @@ const EmployeeList = () => {
             if (items.length === index + 1) {
               return (
                 <Col key={item._id}  ref={lastItemRef}>
-                  <EmployeeCard name={item.employeeName} img={item.employeePicture} key={item._id} acessLevel={item.employeeAccessLevel == 1 ? "Administrador" : "Usuario comum"} />
+                  <EmployeeCard name={item.employeeName} img={item.employeePicture} acessLevel={item.employeeAccessLevel == 1 ? "Administrador" : "Usuario comum"} id={item._id} />
                 </Col>
               );
             } else {
               return (
                 <Col key={item._id}>
-                  <EmployeeCard name={item.employeeName} img={item.employeePicture}  />
+                  <EmployeeCard name={item.employeeName} img={item.employeePicture} acessLevel={item.employeeAccessLevel == 1 ? "Administrador" : "Usuario comum"} id={item._id} />
                 </Col>
               );
             }

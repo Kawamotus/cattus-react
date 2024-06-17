@@ -15,6 +15,8 @@ import CameraDetail from './Pages/CameraDetail';
 import Error404 from './Pages/Error404';
 import Supplies from './Pages/Supplies';
 import Activities from './Pages/Activities';
+import PetAlert from './Pages/PetAlert';
+import EmployeeDetail from './Pages/EmployeeDetail';
 
 
 const App = () => {
@@ -36,11 +38,13 @@ const App = () => {
           <Route path='petRegister' element={<PetRegistration />} />
           <Route path="employees" element={<EmployeeList />} />
           <Route path='employeeRegister' element={<EmployeeRegister />} />
+          <Route path='employeeDetail/:id' element={<EmployeeDetail />} />
           <Route path='camera' element={<CameraList />} />
           <Route path='petDetail/:id' element={<PetDetail />} />
           <Route path='cameraDetail/:id' element={<CameraDetail />} />
           <Route path='supplies' element={<Supplies />} />
           <Route path='activities' element={<Activities />} />
+          <Route path='petAlert' element={<PetAlert />} />
           <Route path='*' element={<Error404 />} />
         </Routes>
     </BrowserRouter>

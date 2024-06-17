@@ -33,6 +33,8 @@ const Sidebar = () => {
   };
 
   const handleLogoutConfirm = () => {
+    Cookies.remove("acessLevel");
+    Cookies.remove("companyName");
     Cookies.remove("token");
     Cookies.remove("id");
     Cookies.remove("company");
@@ -56,6 +58,7 @@ const Sidebar = () => {
           <div className='user-img'>
             <img src={Cookies.get("picture")} alt="Username" /><br />
             <p><strong>{Cookies.get("name")}</strong></p>
+            <p style={{textAlign: "center"}}><i>{Cookies.get("companyName")}</i></p>
           </div>
           
           <NavLink to="/">
@@ -68,7 +71,7 @@ const Sidebar = () => {
             <div className="submenu">
               <NavLink to="/petRegister"><FontAwesomeIcon icon={faPlus} /> &nbsp;&nbsp;Cadastrar</NavLink>
               <NavLink to="/petList"><FontAwesomeIcon icon={faEye} /> &nbsp;&nbsp;Listar</NavLink>
-              <NavLink to="/alertAnimal"><FontAwesomeIcon icon={faTriangleExclamation} />&nbsp;&nbsp;Alerta</NavLink>
+              <NavLink to="/petAlert"><FontAwesomeIcon icon={faTriangleExclamation} />&nbsp;&nbsp;Alerta</NavLink>
             </div>
           )}
           <NavLink to="/employees">
@@ -93,9 +96,9 @@ const Sidebar = () => {
               <NavLink to="/markSupplies"><FontAwesomeIcon icon={faCubes} />&nbsp;&nbsp;Mantimentos</NavLink>
             </div>
           )}
-          <NavLink to="/config">
+          {/* <NavLink to="/config">
             <FontAwesomeIcon icon={faGear} />&nbsp; Configurações
-          </NavLink>
+          </NavLink> */}
           <a onClick={openLogoutModal}>
             <FontAwesomeIcon icon={faRightFromBracket} />&nbsp; Sair
           </a>
