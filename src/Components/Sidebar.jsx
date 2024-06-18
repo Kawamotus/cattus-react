@@ -15,11 +15,6 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [activeMenu, setActiveMenu] = React.useState(null);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
-  const [notifications, setNotifications] = React.useState([
-    "Notification 1",
-    "Notification 2",
-    "Notification 3"
-  ]);
   const [showNotifications, setShowNotifications] = React.useState(false);
   const [notification, setNotification] = React.useState([])
 
@@ -29,7 +24,7 @@ const Sidebar = () => {
     if(localStorage.getItem('notification')){
       setNotification(JSON.parse(localStorage.getItem('notification')));
     }
-  }, [notification]);
+  }, [localStorage.getItem('notification')]);
   
   console.log(JSON.parse(localStorage.getItem('notification')))
   console.log("aaa" + notification)
@@ -161,7 +156,7 @@ const Sidebar = () => {
                 <img className="m-2" src="/imgs/Texto_Logo_Branco.png" alt="CATTUS" style={{width: "auto", height: "30px"}} />
                 <div style={{ position: 'relative' }}>
                 <FontAwesomeIcon icon={faBell} onClick={toggleNotifications} size='2xl' style={{ cursor: 'pointer', color: '#fff', marginRight: "20px" }} />
-                {notification.length > 0 && (
+                {notification.length >= -1 && (
                   <span style={{
                     position: 'absolute',
                     top: '-5px',

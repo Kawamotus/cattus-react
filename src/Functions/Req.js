@@ -112,4 +112,6 @@ export const addNotification = (notification) => {
     const notify = JSON.parse(localStorage.getItem("notification") || "[]");
     notify.push(notification);
     localStorage.setItem("notification", JSON.stringify(notify));
+    const total = JSON.parse(localStorage.getItem("notification")).length;
+    Cookies.set("contador", total);
 }

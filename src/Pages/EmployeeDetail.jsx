@@ -3,8 +3,8 @@ import { Col, Container, Row, Image, Form, ButtonGroup, Button } from 'react-boo
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 
-import { getData, updateData, uploadImg } from '../Functions/Req';
-import { useParams } from 'react-router-dom';
+import { getData, updateData, uploadImg, deleteData } from '../Functions/Req';
+import { useNavigate, useParams } from 'react-router-dom';
 import TituloPagina from '../Components/TituloPagina';
 import Loading from '../Components/Loading';
 import Error404 from './Error404';
@@ -23,6 +23,8 @@ const EmployeeDetail = () => {
     const [picture, setPicture] = React.useState("");
     const [newPicture, setNewPicture] = React.useState(null);
     const [message, setMessage] = React.useState("")
+
+    const navigate = useNavigate();
 
     // const [password, setPassword] = React.useState("");
     
@@ -67,6 +69,15 @@ const EmployeeDetail = () => {
         setPicture(() => retorno.img_url)
         setMessage("");
     }
+
+    const handleDelete = async () => {
+
+        await deleteData("/employee/delete/", id, name + " deletado com sucesso, redirecionando...");
+    
+          setTimeout(() => {
+            navigate('/employees'); 
+          }, 1000); 
+      }
 
     React.useEffect(() => {
         getEmployeeData();
@@ -171,7 +182,7 @@ const EmployeeDetail = () => {
                             <ButtonGroup>
                                 <Button variant='warning' onClick={() => setDesativado(!desativado)} >{desativado ? "Ativar" : "Desativar"}</Button>
                                 <Button variant='success' type='submit'>Atualizar</Button>
-                                <Button variant='danger'>Excluir</Button>
+                                <Button variant='danger' onClick={handleDelete}>Excluir</Button>
                             </ButtonGroup>
                         </Form>
                     </Col>
