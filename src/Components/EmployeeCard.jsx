@@ -1,5 +1,6 @@
 import { Button, Card, ListGroup } from "react-bootstrap";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const EmployeeCard = ({ name, img, id, acessLevel }) => {
 
@@ -13,7 +14,9 @@ const EmployeeCard = ({ name, img, id, acessLevel }) => {
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>{acessLevel}</Card.Text>
-        <Button text="dark" onClick={handleClick} style={{backgroundColor: "#670000", border: 0}} className="btn">Ver detalhes</Button>
+        <Link to={`/employeeDetail/${id}`} >
+          <Button text="dark" onClick={handleClick} style={{backgroundColor: "#670000", border: 0}} className="btn">Ver detalhes</Button>
+        </Link>
       </Card.Body>
     </Card>
     <br />

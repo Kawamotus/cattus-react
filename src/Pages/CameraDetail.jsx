@@ -104,7 +104,7 @@ const CameraDetail = () => {
             <Col sm={8}>
                 <video className="w-100" autoPlay loop muted>
                 <source
-                    src="https://cattus-api.s3.amazonaws.com/WhatsApp+Video+2024-06-13+at+20.23.11.mp4"
+                    src="https://cattus-api.s3.amazonaws.com/WhatsApp+Video+2024-06-14+at+05.49.22.mp4"
                     type="video/mp4"
                     allowFullScreen
                 />

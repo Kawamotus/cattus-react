@@ -92,3 +92,18 @@ export const updateData = async (path, id, body, message) => {
         toast.success(message)
     }
 }
+
+
+export const uploadImg = async (body) => {
+    const response = await fetch(url + "/upload-image", {
+        method: "POST",
+        headers: {
+            'authorization': Cookies.get("token")
+        }, 
+        body: body
+    });
+
+    const data = await response.json();
+
+    return data;
+}

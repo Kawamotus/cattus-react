@@ -146,7 +146,7 @@ const Home = () => {
 	)
 
 	return (
-		<Container fluid="lg">
+		<Container fluid="lg" style={{marginBottom: "50px"}}>
 			<Toaster />
 			<TituloPagina titulo="Pets que precisam de sua atenção: " />
 			<br />
@@ -185,20 +185,16 @@ const Home = () => {
 			<br />
 			<br />
 			<Row>
-				<Col sm={4}>
+				<Col sm={8}>
+				<br />
+				<br />
 					<ChartBar
 						data={dogActivitiesData}
-						titulo={'Média tempo de atividade (em minutos)  - Caes'}
+						titulo={'Média tempo de atividade (em minutos)  - Cães'}
 					/>
-					<ChartDoughnut data={dogSickData} titulo={'Alertas - Cachorros'} />
+					{/* <ChartDoughnut data={dogSickData} titulo={'Alertas - Cachorros'} /> */}
 				</Col>
-				<Col sm={4}>
-					<ChartBar
-						data={catActivitiesData}
-						titulo={'Média tempo de atividade (em minutos)  - Gatos'}
-					/>
-					<ChartDoughnut data={catSickData} titulo={'Alertas - Gatos'} />
-				</Col>
+				
 				<Col sm={4}>
 					<h2 className="text-center mt-5">Adicionados recentemente</h2>
 					<div className="container mt-3">
@@ -212,7 +208,7 @@ const Home = () => {
 						))}
 					</div>
                 </Col>                
-				<Col sm={4}>
+				{/* <Col sm={4}>
 					{totalAnimalsData.cachorro || totalAnimalsData.gatos ? (
 						<ChartDoughnutTotalAnimals
 							data={totalAnimalsData}
@@ -224,6 +220,16 @@ const Home = () => {
 							<p>Nenhum animal registrado :D</p>
 						</Col>
 					)}
+				</Col> */}
+			</Row>
+
+			<Row>
+			<Col sm={8}>
+					<ChartBar
+						data={catActivitiesData}
+						titulo={'Média tempo de atividade (em minutos)  - Gatos'}
+					/>
+					{/* <ChartDoughnut data={catSickData} titulo={'Alertas - Gatos'} /> */}
 				</Col>
 			</Row>
 		</Container>

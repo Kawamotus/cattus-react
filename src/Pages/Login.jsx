@@ -51,15 +51,14 @@ const Login = () => {
                 }
             });
 
-            
-
             userData = await userData.json();
+            console.log(userData);
+            Cookies.set("accessLevel", userData.accessLevel)
+            Cookies.set("companyName", userData.companyName)
             Cookies.set("id", userData.id);
             Cookies.set("name", userData.name);
             Cookies.set("company", userData.company);
             Cookies.set("picture", userData.picture);
-
-            //aparentemnente ta funcionando
 
             navigate("/");
             
@@ -67,13 +66,7 @@ const Login = () => {
 
     }
 
-    
-
-
-    //adicionar um autenticador de login que puxe informações (cookie?)
-    const logado = false;
-
-    if(!logado){
+    if(!Cookies.get("token")){
         return <>
         <div className="login-container" >
             <div className="login-box">
