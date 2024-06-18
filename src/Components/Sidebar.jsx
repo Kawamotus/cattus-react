@@ -3,7 +3,7 @@ import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faPaw, faPlus, faEye, faTriangleExclamation, faUserGroup, faVideo, faCubes, faChartLine, faMarker, faRightFromBracket, faBars, faTimes, faChevronDown, faGear } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faPaw, faPlus, faEye, faTriangleExclamation, faUserGroup, faVideo, faCubes, faChartLine, faMarker, faRightFromBracket, faBars, faTimes, faChevronDown, faGear, faBell } from '@fortawesome/free-solid-svg-icons';
 
 import LogoutModal from './LogoutModal';
 
@@ -14,8 +14,20 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [activeMenu, setActiveMenu] = React.useState(null);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
+  const [notifications, setNotifications] = React.useState([
+    "Notification 1",
+    "Notification 2",
+    "Notification 3"
+  ]);
+  const [showNotifications, setShowNotifications] = React.useState(false);
 
   const sidebarRef = React.useRef(null);
+
+  Cookies.set("notificacoes", [
+    "Notification 1",
+    "Notification 2",
+    "Notification 3"
+  ]);
 
 
   const toggleSidebar = () => {
@@ -68,6 +80,10 @@ const Sidebar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
 
 
   ////Arrumar  icones (cor e tudo mais)
@@ -134,7 +150,44 @@ const Sidebar = () => {
             <nav className="navbar navbar-expand-lg d-flex flex-row align-items-center justify-content-between" style={{backgroundColor: "#670000"}}>
               <button className="openbtn" onClick={toggleSidebar}><FontAwesomeIcon  icon={faBars} /></button>
                 <img className="m-2" src="/imgs/Texto_Logo_Branco.png" alt="CATTUS" style={{width: "auto", height: "30px"}} />
-                <img src={Cookies.get("picture")} alt="" style={{width: "39px", borderRadius: "100%", marginRight: "10px"}}/>
+                <div style={{ position: 'relative' }}>
+                <FontAwesomeIcon icon={faBell} onClick={toggleNotifications} size='2xl' style={{ cursor: 'pointer', color: '#fff', marginRight: "20px" }} />
+                {notifications.length > 0 && (
+                  <span style={{
+                    position: 'absolute',
+                    top: '-5px',
+                    right: '15px',
+                    backgroundColor: 'red',
+                    color: 'white',
+                    borderRadius: '50%',
+                    padding: '2px 5px',
+                    fontSize: '13px'
+                  }}>
+                    {notifications.length}
+                  </span>
+                )}
+                {showNotifications && (
+                  <div style={{
+                    position: 'absolute',
+                    right: 15,
+                    backgroundColor: 'white',
+                    border: '1px solid #ccc',
+                    borderRadius: '5px',
+                    width: '200px',
+                    maxHeight: '300px',
+                    overflowY: 'auto',
+                    boxShadow: '0px 0px 10px rgba(0,0,0,0.1)'
+                  }}>
+                    <ul style={{ listStyleType: 'none', margin: 0, padding: 0 }}>
+                      {notifications.map((notification, index) => (
+                        <li key={index} style={{ padding: '10px', borderBottom: '1px solid #eee' }}>
+                          {notification}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
                 
             </nav>
           </header>
