@@ -29,7 +29,7 @@ const Sidebar = () => {
     if(localStorage.getItem('notification')){
       setNotification(JSON.parse(localStorage.getItem('notification')));
     }
-  }, [localStorage.getItem('notification')]);
+  }, [notification]);
   
   console.log(JSON.parse(localStorage.getItem('notification')))
   console.log("aaa" + notification)

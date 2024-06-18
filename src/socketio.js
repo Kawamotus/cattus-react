@@ -26,6 +26,7 @@ export default function iniciarWebSocket(company) {
   
   socket.off("notificationStatus")
   socket.on("notificationStatus", (info) =>{
+        addNotification(info)
       console.log(info);
       toast.success(`${info.notificationDescription}`, {
           position: 'top-right'
