@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import iniciarWebSocket from '../socketio'
-
+import { Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPaw, faPlus, faEye, faTriangleExclamation, faUserGroup, faVideo, faCubes, faChartLine, faMarker, faRightFromBracket, faBars, faTimes, faChevronDown, faGear, faBell } from '@fortawesome/free-solid-svg-icons';
 
@@ -21,15 +21,18 @@ const Sidebar = () => {
     "Notification 3"
   ]);
   const [showNotifications, setShowNotifications] = React.useState(false);
+  const [notification, setNotification] = React.useState([])
 
   const sidebarRef = React.useRef(null);
 
-  Cookies.set("notificacoes", [
-    "Notification 1",
-    "Notification 2",
-    "Notification 3"
-  ]);
-
+  React.useEffect(() => {
+    if(localStorage.getItem('notification')){
+      setNotification(JSON.parse(localStorage.getItem('notification')));
+    }
+  }, [localStorage.getItem('notification')]);
+  
+  console.log(JSON.parse(localStorage.getItem('notification')))
+  console.log("aaa" + notification)
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -55,6 +58,7 @@ const Sidebar = () => {
     Cookies.remove("company");
     Cookies.remove("name");
     Cookies.remove("picture");
+    localStorage.clear();
     setIsLogoutModalOpen(false);
     navigate("/login");
     setIsOpen(false);
@@ -97,6 +101,7 @@ const Sidebar = () => {
     return (
       <>
         <div ref={sidebarRef} className={`sidenav ${isOpen ? 'open' : ''}`}>
+          <Toaster style={{zIndex: "10"}} />
           <button className="closebtn" onClick={toggleSidebar}><FontAwesomeIcon  icon={faTimes} /></button>
           <div className='user-img'>
             <img src={Cookies.get("picture")} alt="Username" /><br />
@@ -150,13 +155,13 @@ const Sidebar = () => {
           </a>
         </div>
         <div id="main" className={isOpen ? 'shifted' : ''}>
-          <header className=" position-relative" style={{zIndex: "3", borderBottom: "2px solid rgba(0, 0, 0, 0.25)"}}>
+          <header className=" position-relative" style={{zIndex: "0", borderBottom: "2px solid rgba(0, 0, 0, 0.25)"}}>
             <nav className="navbar navbar-expand-lg d-flex flex-row align-items-center justify-content-between" style={{backgroundColor: "#670000"}}>
               <button className="openbtn" onClick={toggleSidebar}><FontAwesomeIcon  icon={faBars} /></button>
                 <img className="m-2" src="/imgs/Texto_Logo_Branco.png" alt="CATTUS" style={{width: "auto", height: "30px"}} />
                 <div style={{ position: 'relative' }}>
                 <FontAwesomeIcon icon={faBell} onClick={toggleNotifications} size='2xl' style={{ cursor: 'pointer', color: '#fff', marginRight: "20px" }} />
-                {notifications.length > 0 && (
+                {notification.length > 0 && (
                   <span style={{
                     position: 'absolute',
                     top: '-5px',
@@ -167,7 +172,7 @@ const Sidebar = () => {
                     padding: '2px 5px',
                     fontSize: '13px'
                   }}>
-                    {notifications.length}
+                    {notification.length}
                   </span>
                 )}
                 {showNotifications && (
@@ -180,12 +185,13 @@ const Sidebar = () => {
                     width: '200px',
                     maxHeight: '300px',
                     overflowY: 'auto',
-                    boxShadow: '0px 0px 10px rgba(0,0,0,0.1)'
+                    boxShadow: '0px 0px 10px rgba(0,0,0,0.1)',
+                    zIndex: "10"
                   }}>
                     <ul style={{ listStyleType: 'none', margin: 0, padding: 0 }}>
-                      {notifications.map((notification, index) => (
+                      {notification.map((notification, index) => (
                         <li key={index} style={{ padding: '10px', borderBottom: '1px solid #eee' }}>
-                          {notification}
+                          {notification.notificationDescription}
                         </li>
                       ))}
                     </ul>

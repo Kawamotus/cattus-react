@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import TituloPagina from '../Components/TituloPagina';
 import Error404 from './Error404';
@@ -20,6 +20,7 @@ const EmployeeRegister = () => {
 
         if(!name || !email || !password || !picture || !accessLevel){
             toast.error("Preencha todos os campos!");
+            return;
         }
 
         const formData = new FormData();
@@ -148,7 +149,6 @@ const EmployeeRegister = () => {
                         </Col>
                     </Row>
                 </Form>
-                <Toaster />
             </Container>    
         )
     }

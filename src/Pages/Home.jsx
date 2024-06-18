@@ -1,13 +1,10 @@
 import React from 'react'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
 import Cookies from 'js-cookie'
-import toast, { Toaster } from 'react-hot-toast'
 
 import PetCard from '../Components/PetCard'
 import RecentEntry from '../Components/RecentEntry'
 import TituloPagina from '../Components/TituloPagina'
-import ChartDoughnut from '../Components/Charts/ChartDoughnut'
-import ChartDoughnutTotalAnimals from '../Components/Charts/ChartDoughnutTotalAnimals'
 import ChartBar from '../Components/Charts/ChartBar'
 
 const Home = () => {
@@ -146,7 +143,6 @@ const Home = () => {
 
 	return (
 		<Container fluid="lg" style={{marginBottom: "50px"}}>
-			<Toaster />
 			<TituloPagina titulo="Pets que precisam de sua atenção: " />
 			<br />
 			<Row>

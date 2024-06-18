@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Form, Button, Spinner, Image, Row, Col, Modal, ButtonGroup } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { getData, updateData, deleteData, uploadImg } from '../Functions/Req';
 
 
@@ -224,7 +224,6 @@ const PetDetail = () => {
 
   return (
     <Container>
-      <Toaster />
       <TituloPagina titulo={petName} />
       <br />
       <Form onSubmit={handleSubmit} style={{marginBottom: "20px"}}>

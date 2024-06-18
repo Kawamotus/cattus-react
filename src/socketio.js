@@ -1,6 +1,8 @@
 import { io } from 'socket.io-client';
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
+import { addNotification } from './Functions/Req';
+
 
 export default function iniciarWebSocket(company) {
   console.log("Carregou WebSocket");
