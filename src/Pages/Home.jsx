@@ -131,7 +131,7 @@ const Home = () => {
 		setChartsTotalAnimals(data.result)
 	}
 
-	React.useEffect(() => {
+  React.useEffect(() => {
 		fetchData()
 	}, [])
 
