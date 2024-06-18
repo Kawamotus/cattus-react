@@ -183,6 +183,7 @@ const PetDetail = () => {
     formData.append("imagem", newPicture)
     const retorno = await uploadImg(formData)
     setPicture(() => retorno.img_url)
+    setNewPicture(null);
     setMessage("");
   }
 
@@ -191,7 +192,8 @@ const PetDetail = () => {
     const formData = new FormData();
     formData.append("imagem", newVacc)
     const retorno = await uploadImg(formData)
-    setVacCard(() => retorno.img_url)
+    setVacCard(() => retorno.img_url);
+    setNewVacc(null);
     setMessage("");
   }
 

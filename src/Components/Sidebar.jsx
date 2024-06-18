@@ -15,6 +15,8 @@ const Sidebar = () => {
   const [activeMenu, setActiveMenu] = React.useState(null);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
 
+  const sidebarRef = React.useRef(null);
+
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -46,6 +48,27 @@ const Sidebar = () => {
   };
 
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      setIsOpen(false);
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
 
   ////Arrumar  icones (cor e tudo mais)
 
@@ -53,7 +76,7 @@ const Sidebar = () => {
   if(Cookies.get("token")){
     return (
       <>
-        <div className={`sidenav ${isOpen ? 'open' : ''}`}>
+        <div ref={sidebarRef} className={`sidenav ${isOpen ? 'open' : ''}`}>
           <button className="closebtn" onClick={toggleSidebar}><FontAwesomeIcon  icon={faTimes} /></button>
           <div className='user-img'>
             <img src={Cookies.get("picture")} alt="Username" /><br />
