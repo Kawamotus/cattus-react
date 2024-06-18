@@ -1,3 +1,5 @@
+import iniciarWebSocket from '../socketio'
+
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
@@ -13,7 +15,8 @@ const Login = () => {
     document.title = "Login";
 
     React.useEffect(() => {
-        if(Cookies.get("token")){
+      if (Cookies.get("token")) {
+          iniciarWebSocket()
             navigate("/");
         }
     })
@@ -60,8 +63,9 @@ const Login = () => {
             Cookies.set("company", userData.company);
             Cookies.set("picture", userData.picture);
 
+            iniciarWebSocket(Cookies.get('company'))
             navigate("/");
-            
+                        
         }
 
     }

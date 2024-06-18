@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import iniciarWebSocket from '../socketio'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPaw, faPlus, faEye, faTriangleExclamation, faUserGroup, faVideo, faCubes, faChartLine, faMarker, faRightFromBracket, faBars, faTimes, faChevronDown, faGear, faBell } from '@fortawesome/free-solid-svg-icons';
@@ -73,6 +74,9 @@ const Sidebar = () => {
   };
 
   React.useEffect(() => {
+    if (Cookies.get("token")) {
+      iniciarWebSocket(Cookies.get("company"))
+    }
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("mousedown", handleClickOutside);
     return () => {

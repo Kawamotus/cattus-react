@@ -1,4 +1,3 @@
-import socket from '../socketio'
 import React from 'react'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
 import Cookies from 'js-cookie'
@@ -135,7 +134,7 @@ const Home = () => {
 		setChartsTotalAnimals(data.result)
 	}
 
-	React.useEffect(() => {
+  React.useEffect(() => {
 		fetchData()
 	}, [])
 
