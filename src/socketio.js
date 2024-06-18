@@ -1,6 +1,7 @@
 import { io } from 'socket.io-client';
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
+import { addNotification } from './Functions/Req';
 
 
 const URL = `http://localhost:8080/?company=${Cookies.get('company')}`
@@ -22,12 +23,12 @@ socket.on("notification", (info) =>{
 })
 
 socket.off("notificationStatus")
-socket.on("notificationStatus", (info) =>{
-    console.log(info);
+socket.on("notificationStatus", (info) => {
+    addNotification(info);
     toast.success(`${info.notificationDescription}`, {
         position: 'top-right'
-    });
-    
+    });    
+    console.log(JSON.parse(Cookies.get("notification")))
 })
 
 export default socket

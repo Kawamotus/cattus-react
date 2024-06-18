@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button, Row, Col, Spinner } from 'react-bootstrap';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import TituloPagina from '../Components/TituloPagina';
 import { postDataFormData } from '../Functions/Req';
@@ -298,7 +298,6 @@ const PetRegistration = () => {
                 </Spinner>
                 </div>
             )}
-            <Toaster />
         </Form>
         <br /><br />
         </div>

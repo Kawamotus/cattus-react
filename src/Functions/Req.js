@@ -107,3 +107,9 @@ export const uploadImg = async (body) => {
 
     return data;
 }
+
+export const addNotification = (notification) => {
+    const notify = JSON.parse(localStorage.getItem("notification") || "[]");
+    notify.push(notification);
+    localStorage.setItem("notification", JSON.stringify(notify));
+}

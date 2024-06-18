@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Container, Row, Image, Form, ButtonGroup, Button } from 'react-bootstrap';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 
 import { getData, updateData, uploadImg } from '../Functions/Req';
@@ -182,7 +182,6 @@ const EmployeeDetail = () => {
                     <Loading />
                 </Row>
                 )}
-                <Toaster />
 
             </Container>
         )
