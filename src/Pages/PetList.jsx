@@ -1,11 +1,16 @@
-import React from 'react';
-import PetCard from '../Components/PetCard';
-import { Col, Container, Row, Spinner, Form, InputGroup } from 'react-bootstrap';
-import Cookies from 'js-cookie';
-
+import React from "react";
+import PetCard from "../Components/PetCard";
+import {
+  Col,
+  Container,
+  Row,
+  Spinner,
+  Form,
+  InputGroup,
+} from "react-bootstrap";
+import Cookies from "js-cookie";
 
 const PetList = () => {
-
   document.title = "Lista de Pets";
 
   const [items, setItems] = React.useState([]);
@@ -15,7 +20,7 @@ const PetList = () => {
   const limit = 4;
   const [hasMore, setHasMore] = React.useState(true);
 
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = React.useState("");
   const [filterType, setFilterType] = React.useState(["petName"]);
 
   const observer = React.useRef();
@@ -23,20 +28,27 @@ const PetList = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8080/animal/select-all/${Cookies.get("company")}?skip=${skip}&limit=${limit}`, {
-        method: "GET",
-        headers: {
-          'authorization': Cookies.get("token")
+      const response = await fetch(
+        `http://localhost:8080/animal/select-all/${Cookies.get(
+          "company"
+        )}?skip=${skip}&limit=${limit}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: Cookies.get("token"),
+          },
         }
-      });
+      );
 
-      if(response.status === 500){
+      if (response.status === 500) {
         throw new Error("Erro interno, tente novamente mais tarde!");
       }
 
       if (!response.ok) {
-        console.log(response)
-        throw new Error("Estamos enfrentando alguns problemas, tente novamente mais tarde");
+        console.log(response);
+        throw new Error(
+          "Estamos enfrentando alguns problemas, tente novamente mais tarde"
+        );
       }
 
       const data = await response.json();
@@ -53,16 +65,19 @@ const PetList = () => {
     fetchData();
   }, [skip]);
 
-  const lastItemRef = React.useCallback((node) => {
-    if (loading) return;
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && hasMore) {
-        setSkip((prevSkip) => prevSkip + limit);
-      }
-    });
-    if (node) observer.current.observe(node);
-  }, [loading, hasMore]);
+  const lastItemRef = React.useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setSkip((prevSkip) => prevSkip + limit);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
 
   if (error) {
     return (
@@ -72,85 +87,77 @@ const PetList = () => {
     );
   }
 
-  
   const handleSearchSubmit = async (e) => {
-
     e.preventDefault();
     setSearchQuery(e.target.value);
     setLoading(true);
 
     try {
       const response = await fetch(`http://localhost:8080/animal/search/`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'authorization': Cookies.get("token"),
-          'Content-Type': "application/json"
-        }, 
+          authorization: Cookies.get("token"),
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           query: searchQuery,
-          fields: filterType
-        })
+          fields: filterType,
+        }),
       });
 
       const data = await response.json();
-      
-      setItems(data);
 
+      setItems(data);
     } catch (error) {
-      console.error('Erro ao buscar pets:', error);
+      console.error("Erro ao buscar pets:", error);
     } finally {
       setLoading(false);
     }
 
-    if(e.target.value === ""){
-      setItems([]);  
+    if (e.target.value === "") {
+      setItems([]);
       setSkip(0);
       await fetchData();
     }
   };
 
-
   const handleFilterChange = (e) => {
     const value = e.target.value;
     switch (value) {
-      case 'type':
+      case "type":
         setFilterType([["petCharacteristics", "petType"]]);
         break;
-      case 'breed':
+      case "breed":
         setFilterType([["petCharacteristics", "petBreed"]]);
         break;
-      case 'castrated':
+      case "castrated":
         setFilterType([["petCharacteristics", "petCastrated"]]);
         break;
-      case 'name':
+      case "name":
         setFilterType(["petName"]);
         break;
       default:
         setFilterType([]);
     }
-  }
+  };
 
   return (
     <Container>
-      
-      <Row className="mb-3" >
+      <Row className="mb-3">
         <Col md={4}>
-          <h1 style={{marginTop: "10px"}} >Lista de Pets</h1>
+          <h1 style={{ marginTop: "10px" }}>Lista de Pets</h1>
         </Col>
-        <Col md={4} style={{marginTop: "20px"}}>
+        <Col md={4} style={{ marginTop: "20px" }}>
           <Form.Group controlId="filtro">
-            <Form.Control
-              as="select" 
-              onChange={handleFilterChange}
-            >
-              <option value="name" >Nome do pet</option>
+            <Form.Control as="select" onChange={handleFilterChange}>
+              <option value="name">Nome do pet</option>
               <option value="type">Tipo do pet</option>
-              <option value="breed" >Raça</option>
+              <option value="breed">Raça</option>
               <option value="castrated">Castrado?</option>
             </Form.Control>
           </Form.Group>
         </Col>
-        <Col md={4} style={{marginTop: "20px"}}>
+        <Col md={4} style={{ marginTop: "20px" }}>
           <InputGroup>
             <Form.Control
               type="text"
@@ -160,22 +167,44 @@ const PetList = () => {
             />
           </InputGroup>
         </Col>
-        
       </Row>
 
       <Row>
-        {
-        items.map((item, index) => {
+        {items.map((item, index) => {
           if (items.length === index + 1) {
             return (
-              <Col key={item._id}  ref={lastItemRef}>
-                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id} border={item.petStatus.petCurrentStatus == 1 ? "warning" : item.petStatus.petCurrentStatus == 2 ? "danger" : "success"}/>
+              <Col key={item._id} ref={lastItemRef}>
+                <PetCard
+                  name={item.petName}
+                  img={item.petPicture}
+                  sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"}
+                  id={item._id}
+                  border={
+                    item.petStatus.petCurrentStatus == 1
+                      ? "warning"
+                      : item.petStatus.petCurrentStatus == 2
+                      ? "danger"
+                      : "success"
+                  }
+                />
               </Col>
             );
           } else {
             return (
               <Col key={item._id}>
-                <PetCard name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} id={item._id} border={item.petStatus.petCurrentStatus == 1 ? "warning" : item.petStatus.petCurrentStatus == 2 ? "danger" : "success"} />
+                <PetCard
+                  name={item.petName}
+                  img={item.petPicture}
+                  sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"}
+                  id={item._id}
+                  border={
+                    item.petStatus.petCurrentStatus == 1
+                      ? "warning"
+                      : item.petStatus.petCurrentStatus == 2
+                      ? "danger"
+                      : "success"
+                  }
+                />
               </Col>
             );
           }
