@@ -112,7 +112,7 @@ const CameraDetail = () => {
             </Col>
             <Col sm={4}>
                 <h2>Animais avistados</h2>
-                {items.slice(2, 5).map(item => (
+                {items.slice(0, 1).map(item => (
                     <RecentEntry name={item.petName} img={item.petPicture} sexo={item.petGender == "Fêmea" ? "Fêmea" : "Macho"} key={item._id} />
                 ))}
             </Col>
